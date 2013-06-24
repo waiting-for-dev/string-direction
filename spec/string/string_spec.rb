@@ -29,6 +29,10 @@ describe String do
         string = ENGLISH
         string.direction.should eql 'left'
       end
+      it "should return 'right' if only right-to-left character are present" do
+        string = ARABIC
+        string.direction.should eql 'right'
+      end
     end
   end
 end

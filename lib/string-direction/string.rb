@@ -1,35 +1,11 @@
+#encoding: UTF-8
+
 class String
   # left-to-right unicode mark
   LTR_MARK = "\u200e"
 
   # right-to-left unicode mark
   RTL_MARK = "\u200f"
-
-  # right-to-left characters unicode blocks
-  RTL_UNICODE_BLOCKS = [
-    # Hebrew main letters
-    "\u0590-\u05ff",
-    # Arabic main letters
-    "\u0600-\u06ff",
-    # Syriac main letters
-    "\u0700-\u074f",
-    # Arabic supplement
-    "\u0750-\u077f",
-    # Thaana main letters
-    "\u0780-\u07bf",
-    # N'Ko main letters
-    "\u07c0-\u07ff",
-    # Samaritan main letters
-    "\u0800-\u083f",
-    # Arabic extended
-    "\u08a0-\u08ff",
-    # Hebrew presentation form
-    "\ufb1d-\ufb4f",
-    # Arabic presentation form 1
-    "\ufb50-\ufdff",
-    # Arabic presentation form 2
-    "\ufe70-\ufeff",
-  ]
 
   # returns the direction in which self is written
   #
@@ -45,6 +21,8 @@ class String
       'right'
     elsif not has_rtl_characters?
       'left'
+    elsif has_rtl_characters?
+      'right'
     end
   end
 
@@ -66,6 +44,6 @@ class String
   #
   # @return [Boolean] true if it containts rtl characters, false otherwise
   def has_rtl_characters?
-    match(Regexp.union(*RTL_UNICODE_BLOCKS)) ? true : false
+    match(/\p{Arabic}|\p{Hebrew}|\p{Nko}|\p{Syriac}|\p{Thaana}|\p{Tifinagh}/) ? true : false
   end
 end
