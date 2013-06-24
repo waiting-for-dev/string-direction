@@ -47,4 +47,14 @@ describe String do
       string.is_ltr?.should be_false
     end
   end
+  describe "#is_rtl?" do
+    it "should return true if it is a right-to-left string" do
+      string = ARABIC
+      string.is_rtl?.should be_true
+    end
+    it "should return false if it is not a right-to-left string" do
+      string = ENGLISH
+      string.is_rtl?.should be_false
+    end
+  end
 end

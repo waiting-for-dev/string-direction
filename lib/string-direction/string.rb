@@ -38,6 +38,13 @@ class String
     (direction == 'left') ? true : false
   end
 
+  # whether self is a right-to-left string
+  #
+  # @return [Boolean] true if it is a right-to-left string, false otherwise
+  def is_rtl?
+    (direction == 'right') ? true : false
+  end
+
   # returns whether self contains the unicode left-to-right mark
   #
   # @return [Boolean] true if it containts ltr mark, false otherwise
