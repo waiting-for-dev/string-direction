@@ -8,6 +8,7 @@ class String
   # right-to-left unicode mark
   RTL_MARK = "\u200f"
 
+  # right-to-left scripts
   RTL_SCRIPTS = %w[Arabic Hebrew Nko Syriac Thaana Tifinagh]
 
   # returns the direction in which self is written
@@ -80,9 +81,9 @@ class String
     match(/[^#{String.join_scripts_for_regexp(RTL_SCRIPTS)}]/) ? true : false
   end
 
-  # given an array of scripts, which should be supported by Ruby {http://www.ruby-doc.org/core-1.9.3/Regexp.html#label-Character+Properties regular expression properties}, returns a string where all of them are concatenaded inside a "\p{}" construction
+  # given an array of scripts, which should be supported by Ruby {http://www.ruby-doc.org/core-1.9.3/Regexp.html#label-Character+Properties regular expression properties}, returns a string where all of them are concatenaded inside a "\\p{}" construction
   #
-  # @param [Array] the array of scripts
+  # @param [Array] scripts the array of scripts
   # @return [String] the script names joined ready to be used in the construction of a regular expression
   # @example
   #   String.join_scripts_for_regexp(%w[Arabic Hebrew]) #=> "\p{Arabic}\p{Hebrew}"
