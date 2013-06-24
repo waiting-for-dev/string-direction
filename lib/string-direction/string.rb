@@ -21,7 +21,9 @@ class String
       'right'
     elsif not has_rtl_characters?
       'left'
-    elsif has_rtl_characters?
+    elsif has_ltr_characters?
+      'bidi'
+    else
       'right'
     end
   end
@@ -44,6 +46,13 @@ class String
   #
   # @return [Boolean] true if it containts rtl characters, false otherwise
   def has_rtl_characters?
-    match(/\p{Arabic}|\p{Hebrew}|\p{Nko}|\p{Syriac}|\p{Thaana}|\p{Tifinagh}/) ? true : false
+    match(/[\p{Arabic}\p{Hebrew}\p{Nko}\p{Syriac}\p{Thaana}\p{Tifinagh}]/) ? true : false
+  end
+
+  # returns whether self contains some left-to-right character
+  #
+  # @return [Boolean] true if it containts ltr characters, false otherwise
+  def has_ltr_characters?
+    match(/[^\p{Arabic}\p{Hebrew}\p{Nko}\p{Syriac}\p{Thaana}\p{Tifinagh}]/) ? true : false
   end
 end
