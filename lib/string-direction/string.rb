@@ -9,7 +9,7 @@ class String
   RTL_MARK = "\u200f"
 
   # right-to-left scripts
-  RTL_SCRIPTS = %w[Arabic Hebrew Nko Syriac Thaana Tifinagh]
+  RTL_SCRIPTS = %w[Arabic Hebrew Nko Kharoshthi Phoenician Syriac Thaana Tifinagh]
 
   # returns the direction in which self is written
   #
