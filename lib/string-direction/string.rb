@@ -5,8 +5,12 @@ class String
   # returns the direction in which self is written
   #
   # @return ["left"] if it's a left-to-right string
+  # @return ["right"] if it's a right-to-left string
+  # @return ["bidi"] if it's a bi-directinal string
   def direction
-    if self.has_ltr_mark?
+    if self.has_ltr_mark? and self.has_rtl_mark?
+      'bidi'
+    elsif self.has_ltr_mark?
       'left'
     elsif self.has_rtl_mark?
       'right'
@@ -18,6 +22,6 @@ class String
   end
 
   def has_rtl_mark?
-    self.match(/^(.*)#{LTR_MARK}(.*)$/) ? false : true
+    self.match(/^(.*)#{RTL_MARK}(.*)$/) ? true : false
   end
 end
