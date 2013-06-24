@@ -6,10 +6,18 @@ class String
   #
   # @return ["left"] if it's a left-to-right string
   def direction
-    if self.match /^(.*)#{LTR_MARK}(.*)$/
+    if self.has_ltr_mark?
       'left'
-    elsif self.match /^(.*)#{RTL_MARK}(.*)$/
+    elsif self.has_rtl_mark?
       'right'
     end
+  end
+
+  def has_ltr_mark?
+    self.match(/^(.*)#{LTR_MARK}(.*)$/) ? true : false
+  end
+
+  def has_rtl_mark?
+    self.match(/^(.*)#{LTR_MARK}(.*)$/) ? false : true
   end
 end
