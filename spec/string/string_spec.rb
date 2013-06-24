@@ -57,4 +57,14 @@ describe String do
       string.is_rtl?.should be_false
     end
   end
+  describe "#is_bidi?" do
+    it "should return true if it is a bi-directional string" do
+      string = ENGLISH+' '+ARABIC
+      string.is_bidi?.should be_true
+    end
+    it "should return false if it is not a bi-directional string" do
+      string = ENGLISH
+      string.is_bidi?.should be_false
+    end
+  end
 end

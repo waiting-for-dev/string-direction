@@ -45,6 +45,13 @@ class String
     (direction == 'right') ? true : false
   end
 
+  # whether self is a bi-directional string
+  #
+  # @return [Boolean] true if it is a bi-directional string, false otherwise
+  def is_bidi?
+    (direction == 'bidi') ? true : false
+  end
+
   # returns whether self contains the unicode left-to-right mark
   #
   # @return [Boolean] true if it containts ltr mark, false otherwise
