@@ -1,7 +1,7 @@
 #encoding: UTF-8
 
-# The String class, with some convenient methods to detect the direction of the text
-class String
+# Module with all the logic for automatic detection of text direction. It will be included in String class.
+module StringDirection
   # left-to-right unicode mark
   LTR_MARK = "\u200e"
 
@@ -11,7 +11,10 @@ class String
   # right-to-left scripts
   RTL_SCRIPTS = %w[Arabic Hebrew Nko Kharoshthi Phoenician Syriac Thaana Tifinagh]
 
-  # returns the direction in which self is written
+  def self.included(base)
+  end
+
+  # returns the direction in which a string is written
   #
   # @return ["left"] if it's a left-to-right string
   # @return ["right"] if it's a right-to-left string
@@ -32,53 +35,53 @@ class String
     end
   end
 
-  # whether self is a left-to-right string
+  # whether string is a left-to-right one
   #
   # @return [Boolean] true if it is a left-to-right string, false otherwise
   def is_ltr?
     (direction == 'left') ? true : false
   end
 
-  # whether self is a right-to-left string
+  # whether string is a right-to-left one
   #
   # @return [Boolean] true if it is a right-to-left string, false otherwise
   def is_rtl?
     (direction == 'right') ? true : false
   end
 
-  # whether self is a bi-directional string
+  # whether string is a bi-directional one
   #
   # @return [Boolean] true if it is a bi-directional string, false otherwise
   def is_bidi?
     (direction == 'bidi') ? true : false
   end
 
-  # returns whether self contains the unicode left-to-right mark
+  # returns whether string contains the unicode left-to-right mark
   #
   # @return [Boolean] true if it containts ltr mark, false otherwise
   def has_ltr_mark?
     match(/^(.*)#{LTR_MARK}(.*)$/) ? true : false
   end
 
-  # returns whether self contains the unicode right-to-left mark
+  # returns whether string contains the unicode right-to-left mark
   #
   # @return [Boolean] true if it containts rtl mark, false otherwise
   def has_rtl_mark?
     match(/^(.*)#{RTL_MARK}(.*)$/) ? true : false
   end
 
-  # returns whether self contains some right-to-left character
+  # returns whether string contains some right-to-left character
   #
   # @return [Boolean] true if it containts rtl characters, false otherwise
   def has_rtl_characters?
-    match(/[#{String.join_scripts_for_regexp(RTL_SCRIPTS)}]/) ? true : false
+    match(/[#{StringDirection::join_scripts_for_regexp(RTL_SCRIPTS)}]/) ? true : false
   end
 
-  # returns whether self contains some left-to-right character
+  # returns whether string contains some left-to-right character
   #
   # @return [Boolean] true if it containts ltr characters, false otherwise
   def has_ltr_characters?
-    match(/[^#{String.join_scripts_for_regexp(RTL_SCRIPTS)}]/) ? true : false
+    match(/[^#{StringDirection::join_scripts_for_regexp(RTL_SCRIPTS)}]/) ? true : false
   end
 
   # given an array of scripts, which should be supported by Ruby {http://www.ruby-doc.org/core-1.9.3/Regexp.html#label-Character+Properties regular expression properties}, returns a string where all of them are concatenaded inside a "\\p{}" construction
@@ -86,7 +89,7 @@ class String
   # @param [Array] scripts the array of scripts
   # @return [String] the script names joined ready to be used in the construction of a regular expression
   # @example
-  #   String.join_scripts_for_regexp(%w[Arabic Hebrew]) #=> "\p{Arabic}\p{Hebrew}"
+  #   StringDirection.join_scripts_for_regexp(%w[Arabic Hebrew]) #=> "\p{Arabic}\p{Hebrew}"
   def self.join_scripts_for_regexp(scripts)
     scripts.map { |script| '\p{'+script+'}' }.join
   end
