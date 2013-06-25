@@ -17,15 +17,15 @@ module StringDirection
     if has_ltr_mark? and has_rtl_mark?
       'bidi'
     elsif has_ltr_mark?
-      'left'
+      'ltr'
     elsif has_rtl_mark?
-      'right'
+      'rtl'
     elsif not has_rtl_characters?
-      'left'
+      'ltr'
     elsif has_ltr_characters?
       'bidi'
     else
-      'right'
+      'rtl'
     end
   end
 
@@ -33,14 +33,14 @@ module StringDirection
   #
   # @return [Boolean] true if it is a left-to-right string, false otherwise
   def is_ltr?
-    (direction == 'left') ? true : false
+    (direction == 'ltr') ? true : false
   end
 
   # whether string is a right-to-left one
   #
   # @return [Boolean] true if it is a right-to-left string, false otherwise
   def is_rtl?
-    (direction == 'right') ? true : false
+    (direction == 'rtl') ? true : false
   end
 
   # whether string is a bi-directional one

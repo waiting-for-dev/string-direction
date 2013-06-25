@@ -6,13 +6,13 @@ describe String do
   let(:arabic) { 'العربية' }
   describe "#direction" do
     context "when marks are present" do
-      it "should return 'left' if it contains the left-to-right mark and no right-to-left mark" do
+      it "should return 'ltr' if it contains the left-to-right mark and no right-to-left mark" do
         string = String::LTR_MARK+english
-        string.direction.should eql 'left'
+        string.direction.should eql 'ltr'
       end
-      it "should return 'right' if it contains the right-to-left mark and no left-to-right mark" do
+      it "should return 'rtl' if it contains the right-to-left mark and no left-to-right mark" do
         string = String::RTL_MARK+arabic
-        string.direction.should eql 'right'
+        string.direction.should eql 'rtl'
       end
       it "should return 'bidi' if it contains both the left-to-right mark and the right-to-left mark" do
         string = String::LTR_MARK+english+String::RTL_MARK+arabic
@@ -20,13 +20,13 @@ describe String do
       end
     end
     context "when marks are not present" do
-      it "should return 'left' if no right-to-left character is present" do
+      it "should return 'ltr' if no right-to-left character is present" do
         string = english
-        string.direction.should eql 'left'
+        string.direction.should eql 'ltr'
       end
-      it "should return 'right' if only right-to-left character are present" do
+      it "should return 'rtl' if only right-to-left character are present" do
         string = arabic
-        string.direction.should eql 'right'
+        string.direction.should eql 'rtl'
       end
       it "should return 'bidi' if both left-to-right and right-to-left characters are present" do
         string = arabic+' '+english
@@ -36,15 +36,15 @@ describe String do
     context "when default rtl scripts are changed" do
       let(:new_rtl_script) { 'Latin' }
       let(:old_rtl_script) { 'Arabic' }
-      it "should return 'right' if there are characters for an added right-to-left script and no marks characters are present" do
+      it "should return 'rtl' if there are characters for an added right-to-left script and no marks characters are present" do
         StringDirection.rtl_scripts << new_rtl_script
         string = english
-        string.direction.should eql 'right'
+        string.direction.should eql 'rtl'
       end
-      it "should return 'left' if there are characters for a deleted right-to-left script (so now ltr) and no mark characters are present" do
+      it "should return 'ltr' if there are characters for a deleted right-to-left script (so now ltr) and no mark characters are present" do
         StringDirection.rtl_scripts.delete old_rtl_script
         string = arabic
-        string.direction.should eql 'left'
+        string.direction.should eql 'ltr'
       end
       after :each do
         StringDirection.rtl_scripts.delete new_rtl_script if StringDirection.rtl_scripts.include? new_rtl_script
