@@ -75,7 +75,8 @@ module StringDirection
   #
   # @return [Boolean] true if it containts ltr characters, false otherwise
   def has_ltr_characters?
-    match(/[^#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/) ? true : false
+    # ignore unicode marks, punctuations, symbols, separator and other general categories
+    gsub(/[\p{M}\p{P}\p{S}\p{Z}\p{C}]/, '').match(/[^#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/) ? true : false
   end
 
   class << self

@@ -50,6 +50,17 @@ describe String do
         StringDirection.rtl_scripts.delete new_rtl_script if StringDirection.rtl_scripts.include? new_rtl_script
         StringDirection.rtl_scripts << old_rtl_script unless StringDirection.rtl_scripts.include? old_rtl_script
       end
+      context "when special characters are present" do
+        it "should ignore special characters for the direction detection" do
+          mark = "\u0903"
+          punctuation = "_"
+          symbol = "€"
+          separator = " "
+          other = "\u0005"
+          string = arabic+mark+punctuation+symbol+separator+other
+          string.direction.should eql 'rtl'
+        end
+      end
     end
   end
   describe "#is_ltr?" do
