@@ -33,6 +33,24 @@ describe String do
         string.direction.should eql 'bidi'
       end
     end
+    context "when default rtl scripts are changed" do
+      let(:new_rtl_script) { 'Latin' }
+      let(:old_rtl_script) { 'Arabic' }
+      it "should return 'right' if there are characters for an added right-to-left script and no marks characters are present" do
+        StringDirection.rtl_scripts << new_rtl_script
+        string = english
+        string.direction.should eql 'right'
+      end
+      it "should return 'left' if there are characters for a deleted right-to-left script (so now ltr) and no mark characters are present" do
+        StringDirection.rtl_scripts.delete old_rtl_script
+        string = arabic
+        string.direction.should eql 'left'
+      end
+      after :each do
+        StringDirection.rtl_scripts.delete new_rtl_script if StringDirection.rtl_scripts.include? new_rtl_script
+        StringDirection.rtl_scripts << old_rtl_script unless StringDirection.rtl_scripts.include? old_rtl_script
+      end
+    end
   end
   describe "#is_ltr?" do
     it "should return true if it is a left-to-right string" do

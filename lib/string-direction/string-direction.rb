@@ -8,10 +8,12 @@ module StringDirection
   # right-to-left unicode mark
   RTL_MARK = "\u200f"
 
-  # right-to-left scripts
-  RTL_SCRIPTS = %w[Arabic Hebrew Nko Kharoshthi Phoenician Syriac Thaana Tifinagh]
+  class << self
+    attr_accessor :rtl_scripts
+  end
 
   def self.included(base)
+    StringDirection.rtl_scripts = %w[Arabic Hebrew Nko Kharoshthi Phoenician Syriac Thaana Tifinagh]
   end
 
   # returns the direction in which a string is written
@@ -74,19 +76,19 @@ module StringDirection
   #
   # @return [Boolean] true if it containts rtl characters, false otherwise
   def has_rtl_characters?
-    match(/[#{StringDirection::join_scripts_for_regexp(RTL_SCRIPTS)}]/) ? true : false
+    match(/[#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/) ? true : false
   end
 
   # returns whether string contains some left-to-right character
   #
   # @return [Boolean] true if it containts ltr characters, false otherwise
   def has_ltr_characters?
-    match(/[^#{StringDirection::join_scripts_for_regexp(RTL_SCRIPTS)}]/) ? true : false
+    match(/[^#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/) ? true : false
   end
 
-  # given an array of scripts, which should be supported by Ruby {http://www.ruby-doc.org/core-1.9.3/Regexp.html#label-Character+Properties regular expression properties}, returns a string where all of them are concatenaded inside a "\\p{}" construction
+  # given an array of script names, which should be supported by Ruby {http://www.ruby-doc.org/core-1.9.3/Regexp.html#label-Character+Properties regular expression properties}, returns a string where all of them are concatenaded inside a "\\p{}" construction
   #
-  # @param [Array] scripts the array of scripts
+  # @param [Array] scripts the array of script names
   # @return [String] the script names joined ready to be used in the construction of a regular expression
   # @example
   #   StringDirection.join_scripts_for_regexp(%w[Arabic Hebrew]) #=> "\p{Arabic}\p{Hebrew}"
