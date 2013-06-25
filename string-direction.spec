@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
    s.name = 'string-direction'
-   s.version = '0.0.1'
+   s.version = '0.0.2'
    s.summary = 'Automatic detection of text direction (ltr, rtl or bidi) for strings'
    s.description = 'https://github.com/laMarciana/string-direction/'
    s.license = 'GPL3'
