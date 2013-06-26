@@ -10,8 +10,8 @@ module StringDirection
 
   # returns the direction in which a string is written
   #
-  # @return ["left"] if it's a left-to-right string
-  # @return ["right"] if it's a right-to-left string
+  # @return ["lft"] if it's a left-to-right string
+  # @return ["rtl"] if it's a right-to-left string
   # @return ["bidi"] if it's a bi-directinal string
   def direction
     if has_ltr_mark? and has_rtl_mark?
