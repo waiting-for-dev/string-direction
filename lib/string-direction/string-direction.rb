@@ -15,6 +15,27 @@ module StringDirection
   RTL  = 'rtl'.freeze
   LTR  = 'ltr'.freeze
 
+  class << self
+    attr_accessor :rtl_scripts
+
+    # hook that is called when the module is included and that initializes rtl_scripts
+    #
+    # @param [Module] base The base module from within current module is included
+    def included(base)
+      @rtl_scripts = %w[Arabic Hebrew Nko Kharoshthi Phoenician Syriac Thaana Tifinagh]
+    end
+
+    # given an array of script names, which should be supported by Ruby {http://www.ruby-doc.org/core-1.9.3/Regexp.html#label-Character+Properties regular expression properties}, returns a string where all of them are concatenaded inside a "\\p{}" construction
+    #
+    # @param [Array] scripts the array of script names
+    # @return [String] the script names joined ready to be used in the construction of a regular expression
+    # @example
+    #   StringDirection.join_scripts_for_regexp(%w[Arabic Hebrew]) #=> "\p{Arabic}\p{Hebrew}"
+    def join_scripts_for_regexp(scripts)
+      scripts.map { |script| '\p{'+script+'}' }.join
+    end
+  end
+
   # returns the direction in which a string is written
   #
   # @return ["ltr"] if it's a left-to-right string
@@ -91,26 +112,5 @@ module StringDirection
 
   def joined_scripts_for_regex
     StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)
-  end
-
-  class << self
-    attr_accessor :rtl_scripts
-
-    # hook that is called when the module is included and that initializes rtl_scripts
-    #
-    # @param [Module] base The base module from within current module is included
-    def included(base)
-      @rtl_scripts = %w[Arabic Hebrew Nko Kharoshthi Phoenician Syriac Thaana Tifinagh]
-    end
-
-    # given an array of script names, which should be supported by Ruby {http://www.ruby-doc.org/core-1.9.3/Regexp.html#label-Character+Properties regular expression properties}, returns a string where all of them are concatenaded inside a "\\p{}" construction
-    #
-    # @param [Array] scripts the array of script names
-    # @return [String] the script names joined ready to be used in the construction of a regular expression
-    # @example
-    #   StringDirection.join_scripts_for_regexp(%w[Arabic Hebrew]) #=> "\p{Arabic}\p{Hebrew}"
-    def join_scripts_for_regexp(scripts)
-      scripts.map { |script| '\p{'+script+'}' }.join
-    end
   end
 end
