@@ -40,21 +40,21 @@ module StringDirection
   #
   # @return [Boolean] true if it is a left-to-right string, false otherwise
   def is_ltr?
-    (direction == LTR) ? true : false
+    direction == LTR
   end
 
   # whether string is a right-to-left one
   #
   # @return [Boolean] true if it is a right-to-left string, false otherwise
   def is_rtl?
-    (direction == RTL) ? true : false
+    direction == RTL
   end
 
   # whether string is a bi-directional one
   #
   # @return [Boolean] true if it is a bi-directional string, false otherwise
   def is_bidi?
-    (direction == BIDI) ? true : false
+    direction == BIDI
   end
 
   # returns whether string contains the unicode left-to-right mark
