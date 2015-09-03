@@ -66,31 +66,31 @@ describe String do
   describe "#is_ltr?" do
     it "should return true if it is a left-to-right string" do
       string = english
-      string.is_ltr?.should be_true
+      string.is_ltr?.should eq(true)
     end
     it "should return false if it is not a left-to-right string" do
       string = arabic
-      string.is_ltr?.should be_false
+      string.is_ltr?.should eq(false)
     end
   end
   describe "#is_rtl?" do
     it "should return true if it is a right-to-left string" do
       string = arabic
-      string.is_rtl?.should be_true
+      string.is_rtl?.should eq(true)
     end
     it "should return false if it is not a right-to-left string" do
       string = english
-      string.is_rtl?.should be_false
+      string.is_rtl?.should eq(false)
     end
   end
   describe "#is_bidi?" do
     it "should return true if it is a bi-directional string" do
       string = english+' '+arabic
-      string.is_bidi?.should be_true
+      string.is_bidi?.should eq(true)
     end
     it "should return false if it is not a bi-directional string" do
       string = english
-      string.is_bidi?.should be_false
+      string.is_bidi?.should eq(false)
     end
   end
 end
