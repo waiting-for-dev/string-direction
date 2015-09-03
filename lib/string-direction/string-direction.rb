@@ -10,6 +10,11 @@ module StringDirection
   RTL_MARK_REGEX    = /#{RTL_MARK}/.freeze # String contains a RTL marker
   CHAR_IGNORE_REGEX = /[\p{M}\p{P}\p{S}\p{Z}\p{C}]/.freeze # ignore unicode marks, punctuations, symbols, separator and other general categories
 
+  # direction strings that get passed around
+  BIDI = 'bidi'.freeze
+  RTL  = 'rtl'.freeze
+  LTR  = 'ltr'.freeze
+
   # returns the direction in which a string is written
   #
   # @return ["ltr"] if it's a left-to-right string
@@ -17,17 +22,17 @@ module StringDirection
   # @return ["bidi"] if it's a bi-directinal string
   def direction
     if has_ltr_mark? && has_rtl_mark?
-      'bidi'
+      BIDI
     elsif has_ltr_mark?
-      'ltr'
+      LTR
     elsif has_rtl_mark?
-      'rtl'
+      RTL
     elsif !has_rtl_characters?
-      'ltr'
+      LTR
     elsif has_ltr_characters?
-      'bidi'
+      BIDI
     else
-      'rtl'
+      RTL
     end
   end
 
@@ -35,21 +40,21 @@ module StringDirection
   #
   # @return [Boolean] true if it is a left-to-right string, false otherwise
   def is_ltr?
-    (direction == 'ltr') ? true : false
+    (direction == LTR) ? true : false
   end
 
   # whether string is a right-to-left one
   #
   # @return [Boolean] true if it is a right-to-left string, false otherwise
   def is_rtl?
-    (direction == 'rtl') ? true : false
+    (direction == RTL) ? true : false
   end
 
   # whether string is a bi-directional one
   #
   # @return [Boolean] true if it is a bi-directional string, false otherwise
   def is_bidi?
-    (direction == 'bidi') ? true : false
+    (direction == BIDI) ? true : false
   end
 
   # returns whether string contains the unicode left-to-right mark
