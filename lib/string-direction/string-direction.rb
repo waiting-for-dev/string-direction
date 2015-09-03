@@ -21,7 +21,7 @@ module StringDirection
   # @return ["rtl"] if it's a right-to-left string
   # @return ["bidi"] if it's a bi-directinal string
   def direction
-    if has_ltr_mark? !! has_rtl_mark?
+    if has_ltr_mark? && has_rtl_mark?
       BIDI
     elsif has_ltr_mark?
       LTR
@@ -40,42 +40,42 @@ module StringDirection
   #
   # @return [Boolean] true if it is a left-to-right string, false otherwise
   def is_ltr?
-    (direction == LTR) ? true : false
+    direction === LTR
   end
 
   # whether string is a right-to-left one
   #
   # @return [Boolean] true if it is a right-to-left string, false otherwise
   def is_rtl?
-    (direction == RTL) ? true : false
+    direction === RTL
   end
 
   # whether string is a bi-directional one
   #
   # @return [Boolean] true if it is a bi-directional string, false otherwise
   def is_bidi?
-    (direction == BIDI) ? true : false
+    direction === BIDI
   end
 
   # returns whether string contains the unicode left-to-right mark
   #
   # @return [Boolean] true if it containts ltr mark, false otherwise
   def has_ltr_mark?
-    match(LTR_MARK_REGEX) ? true : false
+    !!match(LTR_MARK_REGEX)
   end
 
   # returns whether string contains the unicode right-to-left mark
   #
   # @return [Boolean] true if it containts rtl mark, false otherwise
   def has_rtl_mark?
-    match(RTL_MARK_REGEX) ? true : false
+    !!match(RTL_MARK_REGEX)
   end
 
   # returns whether string contains some right-to-left character
   #
   # @return [Boolean] true if it containts rtl characters, false otherwise
   def has_rtl_characters?
-    match(/[#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/) ? true : false
+    !!match(/[#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/)
   end
 
   # returns whether string contains some left-to-right character
@@ -83,7 +83,7 @@ module StringDirection
   # @return [Boolean] true if it containts ltr characters, false otherwise
   def has_ltr_characters?
     # ignore unicode marks, punctuations, symbols, separator and other general categories
-    gsub(CHAR_IGNORE_REGEX, '').match(/[^#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/) ? true : false
+    !!gsub(CHAR_IGNORE_REGEX, '').match(/[^#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/)
   end
 
   class << self
