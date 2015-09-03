@@ -2,11 +2,13 @@
 
 # Module with all the logic for automatic detection of text direction. It will be included in String class.
 module StringDirection
-  # left-to-right unicode mark
-  LTR_MARK = "\u200e"
+  LTR_MARK = "\u200e".freeze # left-to-right unicode mark
+  RTL_MARK = "\u200f".freeze # right-to-left unicode mark
 
-  # right-to-left unicode mark
-  RTL_MARK = "\u200f"
+  # Regular expressions used to match direction markers
+  LTR_MARK_REGEX    = /#{LTR_MARK}/.freeze # String contains a LTR marker
+  RTL_MARK_REGEX    = /#{RTL_MARK}/.freeze # String contains a RTL marker
+  CHAR_IGNORE_REGEX = /[\p{M}\p{P}\p{S}\p{Z}\p{C}]/.freeze # ignore unicode marks, punctuations, symbols, separator and other general categories
 
   # returns the direction in which a string is written
   #
@@ -54,14 +56,14 @@ module StringDirection
   #
   # @return [Boolean] true if it containts ltr mark, false otherwise
   def has_ltr_mark?
-    match(/^(.*)#{LTR_MARK}(.*)$/) ? true : false
+    match(LTR_MARK_REGEX) ? true : false
   end
 
   # returns whether string contains the unicode right-to-left mark
   #
   # @return [Boolean] true if it containts rtl mark, false otherwise
   def has_rtl_mark?
-    match(/^(.*)#{RTL_MARK}(.*)$/) ? true : false
+    match(RTL_MARK_REGEX) ? true : false
   end
 
   # returns whether string contains some right-to-left character
@@ -76,7 +78,7 @@ module StringDirection
   # @return [Boolean] true if it containts ltr characters, false otherwise
   def has_ltr_characters?
     # ignore unicode marks, punctuations, symbols, separator and other general categories
-    gsub(/[\p{M}\p{P}\p{S}\p{Z}\p{C}]/, '').match(/[^#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/) ? true : false
+    gsub(CHAR_IGNORE_REGEX, '').match(/[^#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/) ? true : false
   end
 
   class << self
