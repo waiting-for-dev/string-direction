@@ -1,3 +1,4 @@
-require_relative 'string-direction/string-direction'
+require 'string-direction/version'
+require 'string-direction/string-direction'
 
 String.send :include, StringDirection
