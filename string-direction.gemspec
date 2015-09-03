@@ -1,6 +1,11 @@
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'string-direction/version'
+
 Gem::Specification.new do |s|
   s.name = 'string-direction'
-  s.version = '0.0.4'
+  s.version = StringDirection::VERSION
   s.summary = 'Automatic detection of text direction (ltr, rtl or bidi) for strings'
   s.description = 'https://github.com/waiting-for-dev/string-direction/'
   s.license = 'GPL3'
