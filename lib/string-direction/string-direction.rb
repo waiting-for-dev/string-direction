@@ -75,7 +75,8 @@ module StringDirection
   #
   # @return [Boolean] true if it containts rtl characters, false otherwise
   def has_rtl_characters?
-    !!match(/[#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/)
+    # ignore unicode marks, punctuations, symbols, separator and other general categories
+    !!gsub(CHAR_IGNORE_REGEX, '').match(/[#{joined_scripts_for_regex}]/)
   end
 
   # returns whether string contains some left-to-right character
@@ -83,7 +84,13 @@ module StringDirection
   # @return [Boolean] true if it containts ltr characters, false otherwise
   def has_ltr_characters?
     # ignore unicode marks, punctuations, symbols, separator and other general categories
-    !!gsub(CHAR_IGNORE_REGEX, '').match(/[^#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/)
+    !!gsub(CHAR_IGNORE_REGEX, '').match(/[^#{joined_scripts_for_regex}]/)
+  end
+
+  private
+
+  def joined_scripts_for_regex
+    StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)
   end
 
   class << self
