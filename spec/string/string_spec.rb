@@ -8,29 +8,29 @@ describe String do
     context "when marks are present" do
       it "should return 'ltr' if it contains the left-to-right mark and no right-to-left mark" do
         string = String::LTR_MARK+english
-        string.direction.should eql 'ltr'
+        expect(string.direction).to eql 'ltr'
       end
       it "should return 'rtl' if it contains the right-to-left mark and no left-to-right mark" do
         string = String::RTL_MARK+arabic
-        string.direction.should eql 'rtl'
+        expect(string.direction).to eql 'rtl'
       end
       it "should return 'bidi' if it contains both the left-to-right mark and the right-to-left mark" do
         string = String::LTR_MARK+english+String::RTL_MARK+arabic
-        string.direction.should eql 'bidi'
+        expect(string.direction).to eql 'bidi'
       end
     end
     context "when marks are not present" do
       it "should return 'ltr' if no right-to-left character is present" do
         string = english
-        string.direction.should eql 'ltr'
+        expect(string.direction).to eql 'ltr'
       end
       it "should return 'rtl' if only right-to-left character are present" do
         string = arabic
-        string.direction.should eql 'rtl'
+        expect(string.direction).to eql 'rtl'
       end
       it "should return 'bidi' if both left-to-right and right-to-left characters are present" do
         string = arabic+' '+english
-        string.direction.should eql 'bidi'
+        expect(string.direction).to eql 'bidi'
       end
     end
     context "when default rtl scripts are changed" do
@@ -39,12 +39,12 @@ describe String do
       it "should return 'rtl' if there are characters for an added right-to-left script and no marks characters are present" do
         StringDirection.rtl_scripts << new_rtl_script
         string = english
-        string.direction.should eql 'rtl'
+        expect(string.direction).to eql 'rtl'
       end
       it "should return 'ltr' if there are characters for a deleted right-to-left script (so now ltr) and no mark characters are present" do
         StringDirection.rtl_scripts.delete old_rtl_script
         string = arabic
-        string.direction.should eql 'ltr'
+        expect(string.direction).to eql 'ltr'
       end
       after :each do
         StringDirection.rtl_scripts.delete new_rtl_script if StringDirection.rtl_scripts.include? new_rtl_script
@@ -58,7 +58,7 @@ describe String do
           separator = " "
           other = "\u0005"
           string = arabic+mark+punctuation+symbol+separator+other
-          string.direction.should eql 'rtl'
+          expect(string.direction).to eql 'rtl'
         end
       end
     end
@@ -66,31 +66,31 @@ describe String do
   describe "#is_ltr?" do
     it "should return true if it is a left-to-right string" do
       string = english
-      string.is_ltr?.should be_true
+      expect(string.is_ltr?).to be true
     end
     it "should return false if it is not a left-to-right string" do
       string = arabic
-      string.is_ltr?.should be_false
+      expect(string.is_ltr?).to be false
     end
   end
   describe "#is_rtl?" do
     it "should return true if it is a right-to-left string" do
       string = arabic
-      string.is_rtl?.should be_true
+      expect(string.is_rtl?).to be true
     end
     it "should return false if it is not a right-to-left string" do
       string = english
-      string.is_rtl?.should be_false
+      expect(string.is_rtl?).to be false
     end
   end
   describe "#is_bidi?" do
     it "should return true if it is a bi-directional string" do
       string = english+' '+arabic
-      string.is_bidi?.should be_true
+      expect(string.is_bidi?).to be true
     end
     it "should return false if it is not a bi-directional string" do
       string = english
-      string.is_bidi?.should be_false
+      expect(string.is_bidi?).to be false
     end
   end
 end
