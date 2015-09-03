@@ -12,17 +12,17 @@ module StringDirection
 
   # returns the direction in which a string is written
   #
-  # @return ["lft"] if it's a left-to-right string
+  # @return ["ltr"] if it's a left-to-right string
   # @return ["rtl"] if it's a right-to-left string
   # @return ["bidi"] if it's a bi-directinal string
   def direction
-    if has_ltr_mark? and has_rtl_mark?
+    if has_ltr_mark? && has_rtl_mark?
       'bidi'
     elsif has_ltr_mark?
       'ltr'
     elsif has_rtl_mark?
       'rtl'
-    elsif not has_rtl_characters?
+    elsif !has_rtl_characters?
       'ltr'
     elsif has_ltr_characters?
       'bidi'
