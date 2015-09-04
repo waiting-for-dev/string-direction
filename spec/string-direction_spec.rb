@@ -72,7 +72,9 @@ describe StringDirection do
           let(:string) { english }
 
           it 'treats them as right-to-left chracters' do
-            StringDirection.rtl_scripts << new_rtl_script
+            StringDirection.configure do |config|
+              config.rtl_scripts << new_rtl_script
+            end
 
             expect(subject).to eql 'rtl'
           end
@@ -82,7 +84,9 @@ describe StringDirection do
           let(:string) { arabic }
 
           it "treats them as left-to-right characters" do
-            StringDirection.rtl_scripts.delete old_rtl_script
+            StringDirection.configure do |config|
+              config.rtl_scripts.delete(old_rtl_script)
+            end
 
             expect(subject).to eql 'ltr'
           end
@@ -105,8 +109,10 @@ describe StringDirection do
         end
 
         after :each do
-          StringDirection.rtl_scripts.delete new_rtl_script if StringDirection.rtl_scripts.include? new_rtl_script
-          StringDirection.rtl_scripts << old_rtl_script unless StringDirection.rtl_scripts.include? old_rtl_script
+          StringDirection.configure do |config|
+            config.rtl_scripts.delete new_rtl_script if config.rtl_scripts.include? new_rtl_script
+            config.rtl_scripts << old_rtl_script unless config.rtl_scripts.include? old_rtl_script
+          end
         end
       end
     end
@@ -184,6 +190,26 @@ describe StringDirection do
 
       it 'returns false' do
         expect(subject).to eq(false)
+      end
+    end
+  end
+
+  describe '::configure' do
+    it 'initializes configuration instance var with an instance of StringDirection::Configuration' do
+      described_class.configure {}
+
+      expect(described_class.configuration).to be_an_instance_of(StringDirection::Configuration)
+    end
+
+    it 'yields the Configuration instance' do
+      expect { |b| described_class.configure(&b) }.to yield_with_args(StringDirection.configuration)
+    end
+  end
+
+  describe '::configuration' do
+    context 'when configure block has not been called' do
+      it 'returns a new instance of StringDirection::Configuration' do
+        expect(described_class.configuration).to be_an_instance_of(StringDirection::Configuration)
       end
     end
   end

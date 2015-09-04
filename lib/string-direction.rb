@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 require 'string-direction/version'
+require 'string-direction/configuration'
 
 # Module with all the logic for automatic detection of text direction
 module StringDirection
@@ -18,11 +19,15 @@ module StringDirection
   LTR  = 'ltr'.freeze
 
   class << self
-    attr_accessor :rtl_scripts
+    attr_accessor :configuration
 
-    # rtl_scripts
-    def rtl_scripts
-      @rtl_scripts ||= %w(Arabic Hebrew Nko Kharoshthi Phoenician Syriac Thaana Tifinagh)
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
+    def configure
+      self.configuration ||= Configuration.new
+      yield(configuration)
     end
 
     # given an array of script names, which should be supported by Ruby {http://www.ruby-doc.org/core-1.9.3/Regexp.html#label-Character+Properties regular expression properties}, returns a string where all of them are concatenaded inside a "\\p{}" construction
@@ -96,7 +101,7 @@ module StringDirection
     #
     # @return [Boolean] true if it containts rtl characters, false otherwise
     def has_rtl_characters?(string)
-      string.match(/[#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/) ? true : false
+      string.match(/[#{StringDirection::join_scripts_for_regexp(StringDirection.configuration.rtl_scripts)}]/) ? true : false
     end
 
     # returns whether string contains some left-to-right character
@@ -104,7 +109,7 @@ module StringDirection
     # @return [Boolean] true if it containts ltr characters, false otherwise
     def has_ltr_characters?(string)
       # ignore unicode marks, punctuations, symbols, separator and other general categories
-      string.gsub(CHAR_IGNORE_REGEX, '').match(/[^#{StringDirection::join_scripts_for_regexp(StringDirection.rtl_scripts)}]/) ? true : false
+      string.gsub(CHAR_IGNORE_REGEX, '').match(/[^#{StringDirection::join_scripts_for_regexp(StringDirection.configuration.rtl_scripts)}]/) ? true : false
     end
   end
 end
