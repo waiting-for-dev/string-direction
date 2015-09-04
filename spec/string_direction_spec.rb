@@ -10,7 +10,7 @@ describe StringDirection do
   let(:english) { 'English' }
   let(:arabic) { 'العربية' }
 
-  describe '.direction(string)' do
+  describe '::direction(string)' do
     context 'when marks are present' do
       it "returns 'ltr' if it contains the left-to-right mark and no right-to-left mark" do
         string = described_class::LTR_MARK + english
@@ -89,7 +89,7 @@ describe StringDirection do
     end
   end
 
-  describe '#is_ltr?' do
+  describe '::is_ltr?' do
     it 'returns true if it is a left-to-right string' do
       string = english
 
@@ -103,7 +103,7 @@ describe StringDirection do
     end
   end
 
-  describe '#is_rtl?' do
+  describe '::is_rtl?' do
     it 'returns true if it is a right-to-left string' do
       string = arabic
 
@@ -117,7 +117,7 @@ describe StringDirection do
     end
   end
 
-  describe '#is_bidi?' do
+  describe '::is_bidi?' do
     it 'returns true if it is a bi-directional string' do
       string = english + ' ' + arabic
 
