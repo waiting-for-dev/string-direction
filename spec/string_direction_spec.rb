@@ -15,7 +15,7 @@ describe StringDirection do
 
     context 'when unicode marks are present' do
       context 'when it contains the left-to-right mark but not the right-to-left mark' do
-        let(:string) { described_class::LTR_MARK + english }
+        let(:string) { described_class::LTR_MARK + arabic }
 
         it "returns 'ltr'" do
           expect(subject).to eql 'ltr'
@@ -23,7 +23,7 @@ describe StringDirection do
       end
 
       context 'when it contains the right-to-left mark but not the left-to-right mark' do
-        let(:string) { described_class::RTL_MARK + arabic }
+        let(:string) { described_class::RTL_MARK + english }
 
         it "returns 'rtl'" do
           expect(subject).to eql 'rtl'
@@ -31,7 +31,7 @@ describe StringDirection do
       end
 
       context 'when it contains both the left-to-right mark and the right-to-left mark' do
-        let(:string) { described_class::LTR_MARK + english + described_class::RTL_MARK + arabic }
+        let(:string) { described_class::LTR_MARK + described_class::RTL_MARK + english + arabic }
 
         it "returns 'bidi'" do
           expect(subject).to eql 'bidi'
