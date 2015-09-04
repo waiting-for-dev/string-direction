@@ -41,6 +41,7 @@ module StringDirection
     # @return ["rtl"] if it's a right-to-left string
     # @return ["bidi"] if it's a bi-directinal string
     def direction(string)
+      string = string.to_s
       if has_ltr_mark?(string) && has_rtl_mark?(string)
         BIDI
       elsif has_ltr_mark?(string)

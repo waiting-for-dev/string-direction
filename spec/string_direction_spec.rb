@@ -110,6 +110,22 @@ describe StringDirection do
         end
       end
     end
+
+    context 'when an object responding to #to_s is given as argument' do
+      let(:string) do
+        class described_class::TestObject
+          def to_s
+            'العربية'
+          end
+        end
+
+        described_class::TestObject.new
+      end
+
+      it 'analyzes direction for whatever #to_s returns' do
+        expect(subject).to eq('rtl')
+      end
+    end
   end
 
   describe '::is_ltr?' do
