@@ -92,27 +92,26 @@ describe StringDirection do
           end
         end
 
-        context 'when special characters are present' do
-          let(:string) do
-            mark = "\u0903"
-            punctuation = '_'
-            symbol = '€'
-            separator = ' '
-            other = "\u0005"
-
-            arabic + mark + punctuation + symbol + separator + other
-          end
-
-          it 'ignores them' do
-            expect(subject).to eql 'rtl'
-          end
-        end
-
         after :each do
           StringDirection.configure do |config|
-            config.rtl_scripts.delete new_rtl_script if config.rtl_scripts.include? new_rtl_script
-            config.rtl_scripts << old_rtl_script unless config.rtl_scripts.include? old_rtl_script
+            config.reset
           end
+        end
+      end
+
+      context 'when special characters are present' do
+        let(:string) do
+          mark = "\u0903"
+          punctuation = '_'
+          symbol = '€'
+          separator = ' '
+          other = "\u0005"
+
+          arabic + mark + punctuation + symbol + separator + other
+        end
+
+        it 'ignores them' do
+          expect(subject).to eql 'rtl'
         end
       end
     end
