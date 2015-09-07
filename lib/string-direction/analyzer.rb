@@ -7,7 +7,7 @@ module StringDirection
     attr_accessor :string
 
     def initialize(string)
-      self.string = string
+      self.string = string.to_s
     end
 
     def analyze
