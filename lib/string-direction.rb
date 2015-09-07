@@ -2,6 +2,7 @@
 
 require 'string-direction/version'
 require 'string-direction/configuration'
+require 'string-direction/analyzer'
 
 # Module with all the logic for automatic detection of text direction
 module StringDirection

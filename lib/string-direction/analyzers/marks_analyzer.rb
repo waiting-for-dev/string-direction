@@ -2,6 +2,8 @@ module StringDirection
   class MarksAnalyzer < Analyzer
     LTR_MARK = "\u200e".freeze # left-to-right unicode mark
     RTL_MARK = "\u200f".freeze # right-to-left unicode mark
+    LTR_MARK_REGEX    = /#{LTR_MARK}/.freeze # String contains a LTR marker
+    RTL_MARK_REGEX    = /#{RTL_MARK}/.freeze # String contains a RTL marker
 
     def analyze
       if has_ltr_mark?(string) && has_rtl_mark?(string)
