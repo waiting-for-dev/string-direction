@@ -78,9 +78,7 @@ describe StringDirection::CharactersAnalyzer do
       end
 
       after :each do
-        StringDirection.configure do |config|
-          config.reset
-        end
+        StringDirection.reset_configuration
       end
     end
   end

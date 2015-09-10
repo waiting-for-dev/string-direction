@@ -12,16 +12,4 @@ describe StringDirection::Configuration do
       expect(subject.default_analyzers).to eq([:marks, :characters])
     end
   end
-
-  describe '#reset' do
-    it 'sets StringDirection configuration instance var as a new instance of Configuration' do
-      StringDirection.configure {}
-      configuration = StringDirection.configuration
-
-      StringDirection.configuration.reset
-
-      expect(StringDirection.configuration).to be_an_instance_of(described_class)
-      expect(StringDirection.configuration).not_to eq(configuration)
-    end
-  end
 end

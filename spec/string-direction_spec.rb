@@ -26,4 +26,16 @@ describe StringDirection do
       end
     end
   end
+
+  describe '#reset_configuration' do
+    it 'sets its configuration instance var as a new instance of Configuration' do
+      StringDirection.configure {}
+      configuration = StringDirection.configuration
+
+      StringDirection.reset_configuration
+
+      expect(StringDirection.configuration).to be_an_instance_of(StringDirection::Configuration)
+      expect(StringDirection.configuration).not_to eq(configuration)
+    end
+  end
 end
