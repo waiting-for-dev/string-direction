@@ -19,7 +19,7 @@ module StringDirection
     #
     # @return [Boolean] true if it containts rtl characters, false otherwise
     def has_rtl_characters?(string)
-      string.match(/[#{StringDirection::join_scripts_for_regexp(StringDirection.configuration.rtl_scripts)}]/) ? true : false
+      string.match(/[#{join_scripts_for_regexp(StringDirection.configuration.rtl_scripts)}]/) ? true : false
     end
 
     # returns whether string contains some left-to-right character
