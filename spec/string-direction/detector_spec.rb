@@ -13,6 +13,14 @@ describe StringDirection::Detector do
         expect { described_class.new(:something) }.to raise_error(ArgumentError)
       end
     end
+
+    context 'if analyzer are not given' do
+      it 'takes defaults set in default_analyzers configuration option' do
+        detector = described_class.new
+
+        expect(detector.analyzers).to eq(StringDirection.configuration.default_analyzers)
+      end
+    end
   end
 
   context '#direction(string)' do

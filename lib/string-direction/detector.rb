@@ -3,7 +3,11 @@ module StringDirection
     attr_accessor :analyzers
 
     def initialize(*analyzers)
-      self.analyzers = analyzers
+      if analyzers.empty?
+        self.analyzers = StringDirection.configuration.default_analyzers
+      else
+        self.analyzers = analyzers
+      end
       check_analyzers
     end
 
