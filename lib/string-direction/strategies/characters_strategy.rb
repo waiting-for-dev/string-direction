@@ -1,5 +1,5 @@
 module StringDirection
-  class CharactersAnalyzer < Analyzer
+  class CharactersStrategy < Strategy
     # Regular expressions used to match direction markers
     CHAR_IGNORE_REGEX = /[\p{M}\p{P}\p{S}\p{Z}\p{C}]/.freeze # Ignore unicode marks, punctuations, symbols, separator and other general categories
 

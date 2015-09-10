@@ -7,9 +7,9 @@ describe StringDirection::Configuration do
     end
   end
 
-  describe '#default_analyzers' do
+  describe '#default_strategies' do
     it 'defaults to an array with :marks and :characters' do
-      expect(subject.default_analyzers).to eq([:marks, :characters])
+      expect(subject.default_strategies).to eq([:marks, :characters])
     end
   end
 end

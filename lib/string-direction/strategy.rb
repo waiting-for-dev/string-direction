@@ -1,8 +1,8 @@
 module StringDirection
-  # Abstract parent class for string direction analyzers
-  class Analyzer
-    require 'string-direction/analyzers/marks_analyzer'
-    require 'string-direction/analyzers/characters_analyzer'
+  # Abstract parent class for string direction strategies
+  class Strategy
+    require 'string-direction/strategies/marks_strategy'
+    require 'string-direction/strategies/characters_strategy'
 
     attr_accessor :string
 

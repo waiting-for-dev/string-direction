@@ -1,11 +1,11 @@
-shared_examples_for 'analyzer' do
+shared_examples_for 'strategy' do
   it { expect(described_class.new('abc')).to respond_to(:analyze) }
 
   describe '#initialize(string)' do
     it 'sets string argument as string instance variable' do
-      analyzer = described_class.new('abc')
+      strategy = described_class.new('abc')
 
-      expect(analyzer.string).to eq('abc')
+      expect(strategy.string).to eq('abc')
     end
 
     context 'when an object responding to #to_s is given' do
@@ -16,9 +16,9 @@ shared_examples_for 'analyzer' do
           end
         end
 
-        analyzer = described_class.new(StringDirection::ToStringTestObject.new)
+        strategy = described_class.new(StringDirection::ToStringTestObject.new)
 
-        expect(analyzer.string).to eq('abc')
+        expect(strategy.string).to eq('abc')
       end
     end
   end

@@ -1,20 +1,20 @@
 module StringDirection
   class Detector
-    attr_accessor :analyzers
+    attr_accessor :strategies
 
-    def initialize(*analyzers)
-      if analyzers.empty?
-        self.analyzers = StringDirection.configuration.default_analyzers
+    def initialize(*strategies)
+      if strategies.empty?
+        self.strategies = StringDirection.configuration.default_strategies
       else
-        self.analyzers = analyzers
+        self.strategies = strategies
       end
-      check_analyzers
+      check_strategies
     end
 
     def direction(string)
       direction = nil
-      analyzers.each do |analyzer|
-        direction = analyzer_class(analyzer).new(string).analyze
+      strategies.each do |strategy|
+        direction = strategy_class(strategy).new(string).analyze
         break if direction
       end
       direction
@@ -34,18 +34,18 @@ module StringDirection
 
     private
 
-    def check_analyzers
-      analyzers.each do |analyzer|
+    def check_strategies
+      strategies.each do |strategy|
         begin
-          analyzer_class(analyzer)
+          strategy_class(strategy)
         rescue NameError
-          raise ArgumentError, "Can't find '#{analyzer}' analyzer"
+          raise ArgumentError, "Can't find '#{strategy}' strategy"
         end
       end
     end
 
-    def analyzer_class(analyzer)
-      name = "StringDirection::#{analyzer.to_s.capitalize}Analyzer"
+    def strategy_class(strategy)
+      name = "StringDirection::#{strategy.to_s.capitalize}Strategy"
       Kernel.const_get(name)
     end
   end

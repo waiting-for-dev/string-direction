@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe StringDirection::CharactersAnalyzer do
-  it_behaves_like 'analyzer'
+describe StringDirection::CharactersStrategy do
+  it_behaves_like 'strategy'
 
   describe '#analyze' do
     let(:english) { 'English' }

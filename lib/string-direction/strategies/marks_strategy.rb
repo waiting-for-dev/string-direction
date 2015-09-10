@@ -1,5 +1,5 @@
 module StringDirection
-  class MarksAnalyzer < Analyzer
+  class MarksStrategy < Strategy
     LTR_MARK = "\u200e".freeze # left-to-right unicode mark
     RTL_MARK = "\u200f".freeze # right-to-left unicode mark
     LTR_MARK_REGEX    = /#{LTR_MARK}/.freeze # String contains a LTR marker

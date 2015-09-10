@@ -2,7 +2,7 @@
 
 require 'string-direction/version'
 require 'string-direction/configuration'
-require 'string-direction/analyzer'
+require 'string-direction/strategy'
 require 'string-direction/detector'
 require 'string-direction/string_methods'
 
