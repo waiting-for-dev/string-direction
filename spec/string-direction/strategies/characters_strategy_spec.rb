@@ -3,11 +3,11 @@ require 'spec_helper'
 describe StringDirection::CharactersStrategy do
   it_behaves_like 'strategy'
 
-  describe '#analyze' do
+  describe '#run' do
     let(:english) { 'English' }
     let(:arabic) { 'العربية' }
 
-    subject { described_class.new(string).analyze }
+    subject { described_class.new(string).run }
 
     context 'when no right-to-left character is present' do
       let(:string) { english }

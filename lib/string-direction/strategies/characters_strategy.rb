@@ -3,7 +3,7 @@ module StringDirection
     # Regular expressions used to match direction markers
     CHAR_IGNORE_REGEX = /[\p{M}\p{P}\p{S}\p{Z}\p{C}]/.freeze # Ignore unicode marks, punctuations, symbols, separator and other general categories
 
-    def analyze
+    def run
       if !has_rtl_characters?(string)
         StringDirection::LTR
       elsif has_ltr_characters?(string)

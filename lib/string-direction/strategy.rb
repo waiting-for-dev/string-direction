@@ -10,8 +10,8 @@ module StringDirection
       self.string = string.to_s
     end
 
-    def analyze
-      fail NotImplementedError, 'You must implement `analyze` method'
+    def run
+      fail NotImplementedError, 'You must implement `run` method'
     end
   end
 end

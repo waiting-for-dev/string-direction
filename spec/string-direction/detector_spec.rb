@@ -26,7 +26,7 @@ describe StringDirection::Detector do
   context '#direction(string)' do
     context 'when first strategy detects direction' do
       it 'returns it' do
-        expect_any_instance_of(StringDirection::MarksStrategy).to receive(:analyze).and_return(StringDirection::LTR)
+        expect_any_instance_of(StringDirection::MarksStrategy).to receive(:run).and_return(StringDirection::LTR)
 
         detector = described_class.new(:marks, :characters)
 
@@ -36,8 +36,8 @@ describe StringDirection::Detector do
 
     context 'when first strategy does not detect direction' do
       it 'it tries with the second' do
-        expect_any_instance_of(StringDirection::MarksStrategy).to receive(:analyze).and_return(nil)
-        expect_any_instance_of(StringDirection::CharactersStrategy).to receive(:analyze).and_return(StringDirection::RTL)
+        expect_any_instance_of(StringDirection::MarksStrategy).to receive(:run).and_return(nil)
+        expect_any_instance_of(StringDirection::CharactersStrategy).to receive(:run).and_return(StringDirection::RTL)
 
         detector = described_class.new(:marks, :characters)
 
@@ -47,8 +47,8 @@ describe StringDirection::Detector do
 
     context 'when no strategy detects direction' do
       it 'returns nil' do
-        expect_any_instance_of(StringDirection::MarksStrategy).to receive(:analyze).and_return(nil)
-        expect_any_instance_of(StringDirection::CharactersStrategy).to receive(:analyze).and_return(nil)
+        expect_any_instance_of(StringDirection::MarksStrategy).to receive(:run).and_return(nil)
+        expect_any_instance_of(StringDirection::CharactersStrategy).to receive(:run).and_return(nil)
 
         detector = described_class.new(:marks, :characters)
 

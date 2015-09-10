@@ -3,11 +3,11 @@ require 'spec_helper'
 describe StringDirection::MarksStrategy do
   it_behaves_like 'strategy'
 
-  describe '#analyze' do
+  describe '#run' do
     let(:english) { 'English' }
     let(:arabic) { 'العربية' }
 
-    subject { described_class.new(string).analyze }
+    subject { described_class.new(string).run }
 
     context 'when string contains the left-to-right mark but not the right-to-left mark' do
       let(:string) { described_class::LTR_MARK + arabic }

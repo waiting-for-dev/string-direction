@@ -1,5 +1,5 @@
 shared_examples_for 'strategy' do
-  it { expect(described_class.new('abc')).to respond_to(:analyze) }
+  it { expect(described_class.new('abc')).to respond_to(:run) }
 
   describe '#initialize(string)' do
     it 'sets string argument as string instance variable' do

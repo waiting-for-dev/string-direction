@@ -14,7 +14,7 @@ module StringDirection
     def direction(string)
       direction = nil
       strategies.each do |strategy|
-        direction = strategy_class(strategy).new(string).analyze
+        direction = strategy_class(strategy).new(string).run
         break if direction
       end
       direction
