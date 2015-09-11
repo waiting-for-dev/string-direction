@@ -7,6 +7,7 @@ module StringDirection
       RTL_MARK_REGEX    = /#{RTL_MARK}/.freeze # String contains a RTL marker
 
       def run(string)
+        string = string.to_s
         if has_ltr_mark?(string) && has_rtl_mark?(string)
           StringDirection::BIDI
         elsif has_ltr_mark?(string)

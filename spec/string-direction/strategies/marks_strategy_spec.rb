@@ -40,5 +40,21 @@ describe StringDirection::Strategies::MarksStrategy do
         expect(subject).to be_nil
       end
     end
+
+    context 'when an object responding to #to_s is given' do
+      let(:string) do
+        class StringDirection::TestObject
+          def to_s
+            StringDirection::Strategies::MarksStrategy::LTR_MARK
+          end
+        end
+
+        StringDirection::TestObject.new
+      end
+
+      it 'analyzes the result of #to_s method' do
+        expect(subject).to eq('ltr')
+      end
+    end
   end
 end

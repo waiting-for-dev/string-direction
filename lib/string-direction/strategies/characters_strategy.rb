@@ -5,6 +5,7 @@ module StringDirection
       CHAR_IGNORE_REGEX = /[\p{M}\p{P}\p{S}\p{Z}\p{C}]/.freeze # Ignore unicode marks, punctuations, symbols, separator and other general categories
 
       def run(string)
+        string = string.to_s
         if !has_rtl_characters?(string)
           StringDirection::LTR
         elsif has_ltr_characters?(string)

@@ -77,6 +77,22 @@ describe StringDirection::Strategies::CharactersStrategy do
         end
       end
 
+    context 'when an object responding to #to_s is given' do
+      let(:string) do
+        class StringDirection::TestObject
+          def to_s
+            'English'
+          end
+        end
+
+        StringDirection::TestObject.new
+      end
+
+      it 'analyzes the result of #to_s method' do
+        expect(subject).to eq('ltr')
+      end
+    end
+
       after :each do
         StringDirection.reset_configuration
       end
