@@ -1,32 +1,53 @@
 # string-direction
 
-`string-direction` is a ruby `String` extension for automatic detection of the direction (left-to-right, right-to-left or bi-directional) in which a text should be displayed.
+`string-direction` is a ruby library for automatic detection of the direction (left-to-right, right-to-left or bi-directional) in which a text should be displayed.
 
-Mainly, it exposes four new methods to `String` instances. `direction` can return `ltr`, `rtl` or `bidi` depending on the characters used in the string. There are as well `is_ltr?`, `is_rtl?` and `is_bidi?` convenient predicate methods.
+## Overview
 
 ```ruby
-#encoding: utf-8
 require 'string-direction'
 
-p 'english'.direction #=> "ltr"
-p 'العربية'.direction #=> "rtl"
-p 'english العربية'.direction #=> "bidi"
+detector = StringDirection::Detector.new
 
-p 'english'.is_ltr? #=> "true"
-p 'العربية'.is_ltr? #=> "false"
-p 'العربية'.is_rtl? #=> "true"
-p 'english العربية'.is_bidi? #=> "true"
+detector.direction('english') #=> 'ltr'
+detector.direction('العربية') #=> 'rtl'
+detector.direction("english العربية") #=> 'bidi'
+
+detector.ltr?('english') #=> true
+detector.rtl?('العربية') #=> true
+detector.bidi?('english') #=> false
 ```
 
-## Unicode marks
-If Unicode marks [left-to-right](http://en.wikipedia.org/wiki/Left-to-right_mark) (\u200e) or [right-to-left](http://en.wikipedia.org/wiki/Right-to-left_mark) (\u200f) are present, then `string-direction` rely on them instead of trying to guess from the characters used.
+But, if you preffer, you can monkey patch `String`:
 
 ```ruby
-p "\u200eالعربية".direction #=> "ltr"
-p "\u200fEnglish".direction #=> "rtl"
+String.send(:include, StringDirection::StringMethods)
+
+'english'.direction #=> 'ltr'
+'العربية'.rtl? #=> true
 ```
 
-## Changing default right-to-left scripts
+## Strategies
+
+`string-direction` uses different strategies in order to try to detect the direction of a string. The detector uses them once at a time and returns the result once one of them succeeds, aborting any further analysis.
+
+Right now, two strategies are natively integrated: `marks` and `characters`. They are used, in that order, as default strategies if no strategies are given.
+
+### marks
+
+Looks for the presence of direction Unicode marks: [left-to-right](http://en.wikipedia.org/wiki/Left-to-right_mark) (\u200e) or [right-to-left](http://en.wikipedia.org/wiki/Right-to-left_mark) (\u200f).
+
+```ruby
+detector = StringDirection::Detector.new(:marks)
+
+detector.direction("\u200eالعربية") #=> "ltr"
+detector.direction("\u200fEnglish") #=> "rtl"
+```
+
+### characters
+
+Looks for the presence of right-to-left characters in the scripts used in the string.
+
 By default, `string-direction` consider following scripts to have a right-to-left writing:
 
 * Arabic
@@ -38,12 +59,23 @@ By default, `string-direction` consider following scripts to have a right-to-lef
 * Thaana
 * Tifinagh
 
-You can change easily these defaults interacting with the array `StringDirection.rtl_scripts`
+```ruby
+detector = StringDirection::Detector.new(:characters)
+
+detector.direction('english') #=> 'ltr'
+detector.direction('العربية') #=> 'rtl'
+```
+
+You can change these defaults:
 
 ```ruby
-p 'ᚪᚫᚬᚭᚮᚯ'.direction #=> "ltr"
-StringDirection.rtl_scripts << 'Runic'
-p 'ᚪᚫᚬᚭᚮᚯ'.direction #=> "rtl"
+detector.direction('ᚪᚫᚬᚭᚮᚯ') #=> 'ltr'
+
+StringDirection.configuration do |config|
+    config.rtl_scripts << 'Runic'
+end
+
+detector.direction('ᚪᚫᚬᚭᚮᚯ') #=> 'rtl'
 ```
 
 This can be useful, mainly, for scripts that have both left-to-right and right-to-left representations:
@@ -57,6 +89,31 @@ This can be useful, mainly, for scripts that have both left-to-right and right-t
 * Ugaritic
 
 Keep in mind than only [scripts recognized by Ruby regular expressions](http://www.ruby-doc.org/core-1.9.3/Regexp.html#label-Character+Properties) are allowed.
+
+### Custom Strategies
+
+You can define your custom strategies. To do so, you just have to define a class inside `StringDirection` module with a name ending with `Strategy`. This class has to respond to an instance method `run` which takes the string as argument. You can inherit from `StringDirection::Strategy` to have convenient methods `ltr`, `rtl` and `bidi`.
+
+```ruby
+class StringDirection::AlwaysLtrStrategy
+  def run(string)
+    ltr
+  end
+end
+
+detector = StringDirection::Detector.new(:always_ltr)
+detector.direction('العربية') #=> 'ltr'
+```
+
+### Changing default strategies
+
+`marks` and `characters` are default strategies, but you can change them:
+
+```ruby
+StringDirection.configuration do |config|
+    config.default_strategies = [:custom, :marks, :always_ltr]
+end
+```
 
 ## Release Policy
 
