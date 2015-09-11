@@ -95,7 +95,7 @@ Keep in mind than only [scripts recognized by Ruby regular expressions](http://w
 You can define your custom strategies. To do so, you just have to define a class inside `StringDirection` module with a name ending with `Strategy`. This class has to respond to an instance method `run` which takes the string as argument. You can inherit from `StringDirection::Strategy` to have convenient methods `ltr`, `rtl` and `bidi`.
 
 ```ruby
-class StringDirection::AlwaysLtrStrategy
+class StringDirection::AlwaysLtrStrategy < StringDirection::Strategy
   def run(string)
     ltr
   end
