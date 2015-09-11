@@ -8,7 +8,7 @@ module StringDirection
 
     # Initialize strategies from given arguments. If no strategies are given, they are taken from the value of {StringDirection::Configuration#default_strategies}
     #
-    # @raise [ArgumentError] if strategy class is not found. For example, for an strategy `:marks` a class `StringDirection::Strategy::MarksStrategy` is expected
+    # @raise [ArgumentError] if strategy class is not found. For example, for an strategy `:marks` a class `StringDirection::MarksStrategy` is expected
     def initialize(*strategies)
       strategies = StringDirection.configuration.default_strategies if strategies.empty?
       initialize_strategies(strategies)
@@ -56,7 +56,7 @@ module StringDirection
     def initialize_strategies(strategies)
       self.strategies = strategies.map do |strategy|
         begin
-          name = "StringDirection::Strategies::#{strategy.to_s.capitalize}Strategy"
+          name = "StringDirection::#{strategy.to_s.capitalize}Strategy"
           Kernel.const_get(name).new
         rescue NameError
           raise ArgumentError, "Can't find '#{name}' strategy"

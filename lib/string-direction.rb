@@ -1,7 +1,8 @@
 require 'string-direction/version'
 require 'string-direction/configuration'
 require 'string-direction/detector'
-require 'string-direction/strategies'
+require 'string-direction/strategies/marks_strategy'
+require 'string-direction/strategies/characters_strategy'
 require 'string-direction/string_methods'
 
 # Constants & configuration common in the whole library

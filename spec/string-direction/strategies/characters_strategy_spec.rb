@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-describe StringDirection::Strategies::CharactersStrategy do
-  it_behaves_like 'strategy'
-
+describe StringDirection::CharactersStrategy do
   describe '#run' do
     let(:english) { 'English' }
     let(:arabic) { 'العربية' }

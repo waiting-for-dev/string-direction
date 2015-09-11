@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-describe StringDirection::Strategies::MarksStrategy do
-  it_behaves_like 'strategy'
-
+describe StringDirection::MarksStrategy do
   describe '#run' do
     let(:english) { 'English' }
     let(:arabic) { 'العربية' }
@@ -45,7 +43,7 @@ describe StringDirection::Strategies::MarksStrategy do
       let(:string) do
         class StringDirection::TestObject
           def to_s
-            StringDirection::Strategies::MarksStrategy::LTR_MARK
+            StringDirection::MarksStrategy::LTR_MARK
           end
         end
 

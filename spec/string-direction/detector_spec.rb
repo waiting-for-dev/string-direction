@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe StringDirection::Detector do
-  module StringDirection::Strategies
+  module StringDirection
     class LtrStrategy
       def run(string)
         StringDirection::LTR
@@ -31,8 +31,8 @@ describe StringDirection::Detector do
     it 'sets initialized strategies inflected from arguments in the given order as strategies instance variable array' do
       detector = described_class.new(:ltr, :nil)
 
-      expect(detector.strategies.first).to be_an_instance_of(StringDirection::Strategies::LtrStrategy)
-      expect(detector.strategies.last).to be_an_instance_of(StringDirection::Strategies::NilStrategy)
+      expect(detector.strategies.first).to be_an_instance_of(StringDirection::LtrStrategy)
+      expect(detector.strategies.last).to be_an_instance_of(StringDirection::NilStrategy)
     end
 
     context "if it can't infer the strategy class from given symbol" do
@@ -47,7 +47,7 @@ describe StringDirection::Detector do
 
         detector = described_class.new
 
-        expect(detector.strategies.first).to be_an_instance_of(StringDirection::Strategies::LtrStrategy)
+        expect(detector.strategies.first).to be_an_instance_of(StringDirection::LtrStrategy)
       end
     end
   end
