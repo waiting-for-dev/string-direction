@@ -31,7 +31,8 @@ describe StringDirection::Detector do
     it 'sets initialized strategies inflected from arguments in the given order as strategies instance variable array' do
       detector = described_class.new(:ltr, :nil)
 
-      expect(detector.strategies).to eq([:ltr, :nil])
+      expect(detector.strategies.first).to be_an_instance_of(StringDirection::Strategies::LtrStrategy)
+      expect(detector.strategies.last).to be_an_instance_of(StringDirection::Strategies::NilStrategy)
     end
 
     context "if it can't infer the strategy class from given symbol" do
@@ -42,9 +43,11 @@ describe StringDirection::Detector do
 
     context 'if stragies are not given' do
       it 'takes defaults set in default_strategies configuration option' do
+        allow(StringDirection.configuration).to receive(:default_strategies).and_return([:ltr])
+
         detector = described_class.new
 
-        expect(detector.strategies).to eq(StringDirection.configuration.default_strategies)
+        expect(detector.strategies.first).to be_an_instance_of(StringDirection::Strategies::LtrStrategy)
       end
     end
   end
