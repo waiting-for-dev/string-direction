@@ -15,7 +15,7 @@ describe StringDirection::CharactersStrategy do
       end
     end
 
-    context 'when right-to-left character are present but none left-to-right' do
+    context 'when right-to-left character are present but none of left-to-right' do
       let(:string) { arabic }
 
       it "returns 'rtl'" do
@@ -23,7 +23,7 @@ describe StringDirection::CharactersStrategy do
       end
     end
 
-    context 'when left-to-right character are present but none right-to-left' do
+    context 'when left-to-right character are present but none of right-to-left' do
       let(:string) { english }
 
       it "returns 'ltr'" do
@@ -99,7 +99,7 @@ describe StringDirection::CharactersStrategy do
         StringDirection::TestObject.new
       end
 
-      it 'analyzes the result of #to_s method' do
+      it 'takes as string the result of #to_s method' do
         expect(subject).to eq('ltr')
       end
     end

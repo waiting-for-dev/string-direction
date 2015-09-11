@@ -50,7 +50,7 @@ describe StringDirection::MarksStrategy do
         StringDirection::TestObject.new
       end
 
-      it 'analyzes the result of #to_s method' do
+      it 'takes as string the result of #to_s method' do
         expect(subject).to eq('ltr')
       end
     end

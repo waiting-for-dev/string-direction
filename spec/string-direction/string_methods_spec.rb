@@ -14,19 +14,19 @@ describe StringDirection::StringMethods do
   end
 
   describe '#ltr?' do
-    it 'returns whether string direction is ltr' do
+    it 'returns whether string direction is left-to-right' do
       expect(subject.ltr?).to eq(true)
     end
   end
 
   describe '#rtl?' do
-    it 'returns whether string direction is rtl' do
+    it 'returns whether string direction is right-to-left' do
       expect(subject.rtl?).to eq(false)
     end
   end
 
   describe '#bidi?' do
-    it 'returns whether string direction is bidi' do
+    it 'returns whether string direction is bidirectional' do
       expect(subject.bidi?).to eq(false)
     end
   end

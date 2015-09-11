@@ -28,20 +28,20 @@ describe StringDirection::Detector do
   end
 
   context '#initialize(*strategies)' do
-    it 'sets initialized strategies inflected from arguments in the given order as strategies instance variable array' do
+    it 'initializes the strategies inflected from the arguments and adds them, in the same order, as strategies instance var array' do
       detector = described_class.new(:ltr, :nil)
 
       expect(detector.strategies.first).to be_an_instance_of(StringDirection::LtrStrategy)
       expect(detector.strategies.last).to be_an_instance_of(StringDirection::NilStrategy)
     end
 
-    context "if it can't infer the strategy class from given symbol" do
+    context "when it can't infer the strategy class from given symbol" do
       it 'raises an ArgumentError' do
         expect { described_class.new(:something) }.to raise_error(ArgumentError)
       end
     end
 
-    context 'if stragies are not given' do
+    context 'when stragies are not given' do
       it 'takes defaults set in default_strategies configuration option' do
         allow(StringDirection.configuration).to receive(:default_strategies).and_return([:ltr])
 
@@ -79,7 +79,7 @@ describe StringDirection::Detector do
   end
 
   describe '#ltr?(string)' do
-    context 'when string has ltr direction' do
+    context 'when string has left-to-right direction' do
       it 'returns true' do
         detector = described_class.new(:ltr)
 
@@ -87,7 +87,7 @@ describe StringDirection::Detector do
       end
     end
 
-    context 'when string has not ltr direction' do
+    context 'when string has not left-to-right direction' do
       it 'returns false' do
         detector = described_class.new(:rtl)
 
@@ -97,7 +97,7 @@ describe StringDirection::Detector do
   end
 
   describe '#rtl?(string)' do
-    context 'when string has rtl direction' do
+    context 'when string has right-to-left direction' do
       it 'returns true' do
         detector = described_class.new(:rtl)
 
@@ -105,7 +105,7 @@ describe StringDirection::Detector do
       end
     end
 
-    context 'when string has not rtl direction' do
+    context 'when string has not right-to-left direction' do
       it 'returns false' do
         detector = described_class.new(:bidi)
 
@@ -115,7 +115,7 @@ describe StringDirection::Detector do
   end
 
   describe '#bidi?(string)' do
-    context 'when string has bidi direction' do
+    context 'when string has bidirectional direction' do
       it 'returns true' do
         detector = described_class.new(:bidi)
 
@@ -123,7 +123,7 @@ describe StringDirection::Detector do
       end
     end
 
-    context 'when string has not bidi direction' do
+    context 'when string has not bidirectional direction' do
       it 'returns false' do
         detector = described_class.new(:ltr)
 
