@@ -2,8 +2,10 @@
 
 require 'string-direction/version'
 require 'string-direction/configuration'
-require 'string-direction/strategy'
 require 'string-direction/detector'
+require 'string-direction/strategy'
+require 'string-direction/strategies/marks_strategy'
+require 'string-direction/strategies/characters_strategy'
 require 'string-direction/string_methods'
 
 # Module with all the logic for automatic detection of text direction
