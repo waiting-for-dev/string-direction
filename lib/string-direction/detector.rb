@@ -17,7 +17,7 @@ module StringDirection
     # Tries to detect and return the direction of a string. It returns `ltr` if the string is left-to-right, `rtl` if it is right-to-left, `bidi` if it is bidirectional or `nil` if it can't detect the direction. It iterates through {#strategies} until one of them successes.
     #
     # @param string [String] The string to inspect
-    # @return [String]
+    # @return [String, nil]
     def direction(string)
       direction = nil
       strategies.each do |strategy|
