@@ -7,27 +7,35 @@ describe StringDirection::CharactersStrategy do
 
     subject { described_class.new.run(string) }
 
-    context 'when no right-to-left character is present' do
-      let(:string) { english }
-
-      it "returns 'ltr'" do
-        expect(subject).to eql 'ltr'
-      end
-    end
-
-    context 'when only right-to-left character are present' do
-      let(:string) { arabic }
-
-      it "returns 'rtl'" do
-        expect(subject).to eql 'rtl'
-      end
-    end
-
     context 'when both left-to-right and right-to-left characters are present' do
       let(:string) { arabic + english }
 
       it "returns 'bidi'" do
-        expect(subject).to eql 'bidi'
+        expect(subject).to eq 'bidi'
+      end
+    end
+
+    context 'when right-to-left character are present but none left-to-right' do
+      let(:string) { arabic }
+
+      it "returns 'rtl'" do
+        expect(subject).to eq 'rtl'
+      end
+    end
+
+    context 'when left-to-right character are present but none right-to-left' do
+      let(:string) { english }
+
+      it "returns 'ltr'" do
+        expect(subject).to eq 'ltr'
+      end
+    end
+
+    context 'when neither left-to-right nor right-to-left characters are present' do
+      let(:string) { ' ' }
+
+      it 'returns nil' do
+        expect(subject).to be_nil
       end
     end
 
@@ -43,7 +51,7 @@ describe StringDirection::CharactersStrategy do
             config.rtl_scripts << new_rtl_script
           end
 
-          expect(subject).to eql 'rtl'
+          expect(subject).to eq 'rtl'
         end
       end
 
@@ -55,25 +63,30 @@ describe StringDirection::CharactersStrategy do
             config.rtl_scripts.delete(old_rtl_script)
           end
 
-          expect(subject).to eql 'ltr'
+          expect(subject).to eq 'ltr'
         end
       end
 
-      context 'when special characters are present' do
-        let(:string) do
-          mark = "\u0903"
-          punctuation = '_'
-          symbol = '€'
-          separator = ' '
-          other = "\u0005"
-
-          arabic + mark + punctuation + symbol + separator + other
-        end
-
-        it 'ignores them' do
-          expect(subject).to eql 'rtl'
-        end
+      after :each do
+        StringDirection.reset_configuration
       end
+    end
+
+    context 'when special characters are present' do
+      let(:string) do
+        mark = "\u0903"
+        punctuation = '_'
+        symbol = '€'
+        separator = ' '
+        other = "\u0005"
+
+        arabic + mark + punctuation + symbol + separator + other
+      end
+
+      it 'ignores them' do
+        expect(subject).to eq 'rtl'
+      end
+    end
 
     context 'when an object responding to #to_s is given' do
       let(:string) do
@@ -88,11 +101,6 @@ describe StringDirection::CharactersStrategy do
 
       it 'analyzes the result of #to_s method' do
         expect(subject).to eq('ltr')
-      end
-    end
-
-      after :each do
-        StringDirection.reset_configuration
       end
     end
   end
