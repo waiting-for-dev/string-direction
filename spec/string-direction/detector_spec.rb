@@ -1,27 +1,29 @@
 require 'spec_helper'
 
 describe StringDirection::Detector do
-  class StringDirection::LtrStrategy < StringDirection::Strategy
-    def run
-      StringDirection::LTR
+  module StringDirection::Strategies
+    class LtrStrategy
+      def run(string)
+        StringDirection::LTR
+      end
     end
-  end
 
-  class StringDirection::RtlStrategy < StringDirection::Strategy
-    def run
-      StringDirection::RTL
+    class RtlStrategy
+      def run(string)
+        StringDirection::RTL
+      end
     end
-  end
 
-  class StringDirection::BidiStrategy < StringDirection::Strategy
-    def run
-      StringDirection::BIDI
+    class BidiStrategy
+      def run(string)
+        StringDirection::BIDI
+      end
     end
-  end
 
-  class StringDirection::NilStrategy < StringDirection::Strategy
-    def run
-      nil
+    class NilStrategy
+      def run(string)
+        nil
+      end
     end
   end
 

@@ -6,7 +6,7 @@ module StringDirection
     # @return [Array]
     attr_accessor :rtl_scripts
 
-    # Default strategies, in order, that {Detector} uses if they are not given explicetly. Values are symbols with a matching class expected. For example, `:marks` expects a class `StringDirection::MarksStrategy` to exist. Defaults to `:marks` and `:characters`.
+    # Default strategies, in order, that {Detector} uses if they are not given explicetly. Values are symbols with a matching class expected. For example, `:marks` expects a class `StringDirection::Strategies::MarksStrategy` to exist. Defaults to `:marks` and `:characters`.
     #
     # @return [Array]
     attr_accessor :default_strategies
