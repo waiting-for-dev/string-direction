@@ -4,7 +4,7 @@ describe StringDirection::StringMethods do
   subject { 'abc' }
 
   before :each do
-    String.include(StringDirection::StringMethods)
+    String.send(:include, StringDirection::StringMethods)
   end
 
   describe '#direction' do
