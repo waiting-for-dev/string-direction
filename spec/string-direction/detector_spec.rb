@@ -1,11 +1,35 @@
 require 'spec_helper'
 
 describe StringDirection::Detector do
-  context '#initialize(*strategies)' do
-    it 'sets strategies arguments in the given order as strategies instance variable array' do
-      detector = described_class.new(:marks, :characters)
+  class StringDirection::LtrStrategy < StringDirection::Strategy
+    def run
+      StringDirection::LTR
+    end
+  end
 
-      expect(detector.strategies).to eq([:marks, :characters])
+  class StringDirection::RtlStrategy < StringDirection::Strategy
+    def run
+      StringDirection::RTL
+    end
+  end
+
+  class StringDirection::BidiStrategy < StringDirection::Strategy
+    def run
+      StringDirection::BIDI
+    end
+  end
+
+  class StringDirection::NilStrategy < StringDirection::Strategy
+    def run
+      nil
+    end
+  end
+
+  context '#initialize(*strategies)' do
+    it 'sets initialized strategies inflected from arguments in the given order as strategies instance variable array' do
+      detector = described_class.new(:ltr, :nil)
+
+      expect(detector.strategies).to eq([:ltr, :nil])
     end
 
     context "if it can't infer the strategy class from given symbol" do
@@ -26,9 +50,7 @@ describe StringDirection::Detector do
   context '#direction(string)' do
     context 'when first strategy detects direction' do
       it 'returns it' do
-        expect_any_instance_of(StringDirection::MarksStrategy).to receive(:run).and_return(StringDirection::LTR)
-
-        detector = described_class.new(:marks, :characters)
+        detector = described_class.new(:ltr, :rtl)
 
         expect(detector.direction('abc')).to eq(StringDirection::LTR)
       end
@@ -36,10 +58,7 @@ describe StringDirection::Detector do
 
     context 'when first strategy does not detect direction' do
       it 'it tries with the second' do
-        expect_any_instance_of(StringDirection::MarksStrategy).to receive(:run).and_return(nil)
-        expect_any_instance_of(StringDirection::CharactersStrategy).to receive(:run).and_return(StringDirection::RTL)
-
-        detector = described_class.new(:marks, :characters)
+        detector = described_class.new(:nil, :rtl)
 
         expect(detector.direction('abc')).to eq(StringDirection::RTL)
       end
@@ -47,10 +66,7 @@ describe StringDirection::Detector do
 
     context 'when no strategy detects direction' do
       it 'returns nil' do
-        expect_any_instance_of(StringDirection::MarksStrategy).to receive(:run).and_return(nil)
-        expect_any_instance_of(StringDirection::CharactersStrategy).to receive(:run).and_return(nil)
-
-        detector = described_class.new(:marks, :characters)
+        detector = described_class.new(:nil)
 
         expect(detector.direction('abc')).to be_nil
       end
@@ -58,11 +74,9 @@ describe StringDirection::Detector do
   end
 
   describe '#ltr?(string)' do
-    let(:detector) { described_class.new(:marks, :characters) }
-
     context 'when string has ltr direction' do
       it 'returns true' do
-        expect(detector).to receive(:direction).with('abc').and_return(StringDirection::LTR)
+        detector = described_class.new(:ltr)
 
         expect(detector.ltr?('abc')).to eq(true)
       end
@@ -70,7 +84,7 @@ describe StringDirection::Detector do
 
     context 'when string has not ltr direction' do
       it 'returns false' do
-        expect(detector).to receive(:direction).with('abc').and_return(StringDirection::RTL)
+        detector = described_class.new(:rtl)
 
         expect(detector.ltr?('abc')).to eq(false)
       end
@@ -78,11 +92,9 @@ describe StringDirection::Detector do
   end
 
   describe '#rtl?(string)' do
-    let(:detector) { described_class.new(:marks, :characters) }
-
     context 'when string has rtl direction' do
       it 'returns true' do
-        expect(detector).to receive(:direction).with('abc').and_return(StringDirection::RTL)
+        detector = described_class.new(:rtl)
 
         expect(detector.rtl?('abc')).to eq(true)
       end
@@ -90,7 +102,7 @@ describe StringDirection::Detector do
 
     context 'when string has not rtl direction' do
       it 'returns false' do
-        expect(detector).to receive(:direction).with('abc').and_return(StringDirection::BIDI)
+        detector = described_class.new(:bidi)
 
         expect(detector.rtl?('abc')).to eq(false)
       end
@@ -98,11 +110,9 @@ describe StringDirection::Detector do
   end
 
   describe '#bidi?(string)' do
-    let(:detector) { described_class.new(:marks, :characters) }
-
     context 'when string has bidi direction' do
       it 'returns true' do
-        expect(detector).to receive(:direction).with('abc').and_return(StringDirection::BIDI)
+        detector = described_class.new(:bidi)
 
         expect(detector.bidi?('abc')).to eq(true)
       end
@@ -110,7 +120,7 @@ describe StringDirection::Detector do
 
     context 'when string has not bidi direction' do
       it 'returns false' do
-        expect(detector).to receive(:direction).with('abc').and_return(StringDirection::LTR)
+        detector = described_class.new(:ltr)
 
         expect(detector.bidi?('abc')).to eq(false)
       end
