@@ -2,7 +2,25 @@ require 'spec_helper'
 
 describe StringDirection do
   it 'has a version number' do
-    expect(StringDirection::VERSION).not_to be nil
+    expect(described_class::VERSION).not_to be nil
+  end
+
+  describe '::LTR' do
+    it "is 'ltr'" do
+      expect(described_class::LTR).to eq('ltr')
+    end
+  end
+
+  describe '::RTL' do
+    it "is 'rtl'" do
+      expect(described_class::RTL).to eq('rtl')
+    end
+  end
+
+  describe '::BIDI' do
+    it "is 'bidi'" do
+      expect(described_class::BIDI).to eq('bidi')
+    end
   end
 
   describe '::configure' do
