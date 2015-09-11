@@ -1,6 +1,6 @@
 module StringDirection
   # Strategy to detect direction looking for the presence of unicode marks
-  class MarksStrategy
+  class MarksStrategy < Strategy
     # left-to-right unicode mark
     LTR_MARK = "\u200e".freeze
 
@@ -14,11 +14,11 @@ module StringDirection
     def run(string)
       string = string.to_s
       if ltr_mark?(string) && rtl_mark?(string)
-        StringDirection::BIDI
+        bidi
       elsif ltr_mark?(string)
-        StringDirection::LTR
+        ltr
       elsif rtl_mark?(string)
-        StringDirection::RTL
+        rtl
       end
     end
 

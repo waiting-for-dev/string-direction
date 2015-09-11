@@ -1,21 +1,21 @@
 module StringDirection
   # Strategy to detect direction from the scripts to which string characters belong
-  class CharactersStrategy
+  class CharactersStrategy < Strategy
     # Ignored characters: unicode marks, punctuations, symbols, separator and other general categories
     CHAR_IGNORE_REGEX = /[\p{M}\p{P}\p{S}\p{Z}\p{C}]/.freeze
 
-    # Inspect to wich scripts characters belongs and  infer from it the string direction. right-to-left scripts are those in {Configuration#rtl_scripts}
+    # Inspect to wich scripts characters belongs and  infer from them the string direction. right-to-left scripts are those in {Configuration#rtl_scripts}
     #
     # params [String] The string to inspect
     # @return [String, nil]
     def run(string)
       string = string.to_s
       if ltr_characters?(string) && rtl_characters?(string)
-        StringDirection::BIDI
+        bidi
       elsif ltr_characters?(string)
-        StringDirection::LTR
+        ltr
       elsif rtl_characters?(string)
-        StringDirection::RTL
+        rtl
       end
     end
 
