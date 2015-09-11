@@ -25,6 +25,12 @@ describe StringDirection::Detector do
         nil
       end
     end
+
+    class CamelizeCamelizeStrategy < Strategy
+      def run(string)
+        nil
+      end
+    end
   end
 
   context '#initialize(*strategies)' do
@@ -33,6 +39,12 @@ describe StringDirection::Detector do
 
       expect(detector.strategies.first).to be_an_instance_of(StringDirection::LtrStrategy)
       expect(detector.strategies.last).to be_an_instance_of(StringDirection::NilStrategy)
+    end
+
+    it 'infers strategy name camelizing, ending with "Strategy" and looking inside StringDirection module' do
+      detector = described_class.new(:camelize_camelize)
+
+      expect(detector.strategies.first).to be_an_instance_of(StringDirection::CamelizeCamelizeStrategy)
     end
 
     context "when it can't infer the strategy class from given symbol" do

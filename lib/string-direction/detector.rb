@@ -56,12 +56,17 @@ module StringDirection
     def initialize_strategies(strategies)
       self.strategies = strategies.map do |strategy|
         begin
-          name = "StringDirection::#{strategy.to_s.capitalize}Strategy"
+          name = infer_strategy_class_name(strategy)
           Kernel.const_get(name).new
         rescue NameError
           raise ArgumentError, "Can't find '#{name}' strategy"
         end
       end
+    end
+
+    def infer_strategy_class_name(strategy)
+      base_name = strategy.to_s.split('_').map(&:capitalize).join
+      "StringDirection::#{base_name}Strategy"
     end
   end
 end
