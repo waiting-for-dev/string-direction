@@ -22,15 +22,15 @@ module StringDirection
     private
 
     def rtl_characters?(string)
-      string.match(/[#{join_scripts_for_regexp(rtl_scripts)}]/) ? true : false
+      string.match(/[#{join_rtl_for_regex}]/)
     end
 
     def ltr_characters?(string)
-      string.gsub(CHAR_IGNORE_REGEX, '').match(/[^#{join_scripts_for_regexp(rtl_scripts)}]/) ? true : false
+      string.gsub(CHAR_IGNORE_REGEX, '').match(/[^#{join_rtl_for_regex}]/)
     end
 
-    def join_scripts_for_regexp(scripts)
-      scripts.map { |script| '\p{' + script + '}' }.join
+    def join_rtl_for_regex
+      rtl_scripts.map { |script| '\p{' + script + '}' }.join
     end
 
     def rtl_scripts
