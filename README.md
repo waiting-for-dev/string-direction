@@ -52,6 +52,8 @@ detector.direction("\u200eالعربية") #=> "ltr"
 detector.direction("\u200fEnglish") #=> "rtl"
 ```
 
+`marks` strategy can not only analyze a string but everything responding to `to_s`.
+
 ### characters
 
 Looks for the presence of right-to-left characters in the scripts used in the string.
@@ -97,6 +99,8 @@ This can be useful, mainly, for scripts that have both left-to-right and right-t
 * Ugaritic
 
 Keep in mind than only [scripts recognized by Ruby regular expressions](http://www.ruby-doc.org/core-1.9.3/Regexp.html#label-Character+Properties) are allowed.
+
+`characters` strategy can not only analyze a string but everything responding to `to_s`.
 
 ### Custom Strategies
 
