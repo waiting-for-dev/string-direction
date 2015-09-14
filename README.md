@@ -71,7 +71,7 @@ You can change these defaults:
 ```ruby
 detector.direction('ᚪᚫᚬᚭᚮᚯ') #=> 'ltr'
 
-StringDirection.configuration do |config|
+StringDirection.configure do |config|
     config.rtl_scripts << 'Runic'
 end
 
@@ -110,7 +110,7 @@ detector.direction('العربية') #=> 'ltr'
 `marks` and `characters` are default strategies, but you can change them:
 
 ```ruby
-StringDirection.configuration do |config|
+StringDirection.configure do |config|
     config.default_strategies = [:custom, :marks, :always_ltr]
 end
 ```
