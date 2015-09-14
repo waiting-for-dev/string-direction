@@ -12,4 +12,10 @@ describe StringDirection::Configuration do
       expect(subject.default_strategies).to eq([:marks, :characters])
     end
   end
+
+  describe '#string_methods_strategies' do
+    it 'defaults to an array with :marks and :characters' do
+      expect(subject.string_methods_strategies).to eq([:marks, :characters])
+    end
+  end
 end

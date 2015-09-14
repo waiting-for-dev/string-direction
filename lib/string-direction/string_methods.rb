@@ -25,7 +25,11 @@ module StringDirection
     private
 
     def string_direction_detector
-      @string_direction_detector ||= StringDirection::Detector.new
+      @string_direction_detector ||= StringDirection::Detector.new(*string_direction_strategies)
+    end
+
+    def string_direction_strategies
+      StringDirection.configuration.string_methods_strategies
     end
   end
 end

@@ -11,10 +11,16 @@ module StringDirection
     # @return [Array]
     attr_accessor :default_strategies
 
+    # Strategies, in order, that {StringMethods} uses. Values are symbols with a matching class expected. For example, `:marks` expects a class `StringDirection::MarksStrategy` to exist. Defaults to `:marks` and `:characters`.
+    #
+    # @return [Array]
+    attr_accessor :string_methods_strategies
+
     # Initialize defaults
     def initialize
       self.rtl_scripts = %w(Arabic Hebrew Nko Kharoshthi Phoenician Syriac Thaana Tifinagh)
       self.default_strategies = [:marks, :characters]
+      self.string_methods_strategies = [:marks, :characters]
     end
   end
 end
