@@ -25,11 +25,11 @@ module StringDirection
     private
 
     def ltr_mark?(string)
-      string.include?(LTR_MARK) ? true : false
+      string.include?(LTR_MARK)
     end
 
     def rtl_mark?(string)
-      string.include?(RTL_MARK) ? true : false
+      string.include?(RTL_MARK)
     end
   end
 end
