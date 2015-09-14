@@ -32,7 +32,7 @@ module StringDirection
     # @param string [String] The string to inspect
     # @return [Boolean]
     def ltr?(string)
-      direction(string) == StringDirection::LTR
+      direction(string) == ltr
     end
 
     # Returns whether string is right-to-left or not
@@ -40,7 +40,7 @@ module StringDirection
     # @param string [String] The string to inspect
     # @return [Boolean]
     def rtl?(string)
-      direction(string) == StringDirection::RTL
+      direction(string) == rtl
     end
 
     # Returns whether string is bidirectional or not
@@ -48,7 +48,7 @@ module StringDirection
     # @param string [String] The string to inspect
     # @return [Boolean]
     def bidi?(string)
-      direction(string) == StringDirection::BIDI
+      direction(string) == bidi
     end
 
     private
@@ -67,6 +67,18 @@ module StringDirection
     def infer_strategy_class_name(strategy)
       base_name = strategy.to_s.split('_').map(&:capitalize).join
       "StringDirection::#{base_name}Strategy"
+    end
+
+    def ltr
+      StringDirection::LTR
+    end
+
+    def rtl
+      StringDirection::RTL
+    end
+
+    def bidi
+      StringDirection::BIDI
     end
   end
 end
