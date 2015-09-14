@@ -80,7 +80,7 @@ You can change these defaults:
 detector.direction('ᚪᚫᚬᚭᚮᚯ') #=> 'ltr'
 
 StringDirection.configure do |config|
-    config.rtl_scripts << 'Runic'
+  config.rtl_scripts << 'Runic'
 end
 
 detector.direction('ᚪᚫᚬᚭᚮᚯ') #=> 'rtl'
@@ -119,7 +119,25 @@ detector.direction('العربية') #=> 'ltr'
 
 ```ruby
 StringDirection.configure do |config|
-    config.default_strategies = [:custom, :marks, :always_ltr]
+  config.default_strategies = [:custom, :marks, :always_ltr]
+end
+```
+
+## Monkey patching String
+
+If you desire, you can monkey patch `String`:
+
+```ruby
+String.send(:include, StringDirection::StringMethods)
+
+'english'.direction #=> 'ltr'
+```
+
+In that case, strategies configured in `string_method_strategies` are used:
+
+```ruby
+StringDirection.configure do |config|
+  config.string_methods_strategies = [:marks, :characters]
 end
 ```
 
