@@ -31,11 +31,19 @@ String.send(:include, StringDirection::StringMethods)
 
 `string-direction` uses different strategies in order to try to detect the direction of a string. The detector uses them once at a time and returns the result once one of them succeeds, aborting any further analysis.
 
-Right now, two strategies are natively integrated: `marks` and `characters`. They are used, in that order, as default strategies if no strategies are given.
+Strategies are passed to the detector during its initialization:
+
+```ruby
+detector = StringDirection::Detector.new(:foo, :bar)
+```
+
+In the above example, classes `StringDirection::FooStrategy` and `StringDirection::BarStrategy` have to be in the load path.
+
+Two strategies are natively integrated: `marks` and `characters`. They are used, in that order, as default strategies if no arguments are given to the detector.
 
 ### marks
 
-Looks for the presence of direction Unicode marks: [left-to-right](http://en.wikipedia.org/wiki/Left-to-right_mark) (\u200e) or [right-to-left](http://en.wikipedia.org/wiki/Right-to-left_mark) (\u200f).
+Looks for the presence of Unicode direction marks: [left-to-right](http://en.wikipedia.org/wiki/Left-to-right_mark) (\u200e) or [right-to-left](http://en.wikipedia.org/wiki/Right-to-left_mark) (\u200f).
 
 ```ruby
 detector = StringDirection::Detector.new(:marks)
@@ -92,7 +100,7 @@ Keep in mind than only [scripts recognized by Ruby regular expressions](http://w
 
 ### Custom Strategies
 
-You can define your custom strategies. To do so, you just have to define a class inside `StringDirection` module with a name ending with `Strategy`. This class has to respond to an instance method `run` which takes the string as argument. You can inherit from `StringDirection::Strategy` to have convenient methods `ltr`, `rtl` and `bidi`.
+You can define your custom strategies. To do so, you just have to define a class inside `StringDirection` module with a name ending with `Strategy`. This class has to respond to an instance method `run` which takes the string as argument. You can inherit from `StringDirection::Strategy` to have convenient methods `ltr`, `rtl` and `bidi` which return expected result. If the strategy doesn't know the direction, it must return `nil`.
 
 ```ruby
 class StringDirection::AlwaysLtrStrategy < StringDirection::Strategy
