@@ -2,7 +2,7 @@ module StringDirection
   # Strategy to detect direction from the scripts to which string characters belong
   class CharactersStrategy < Strategy
     # Ignored characters: unicode marks, punctuations, symbols, separator and other general categories
-    CHAR_IGNORE_REGEX = /[\p{M}\p{P}\p{S}\p{Z}\p{C}]/.freeze
+    IGNORED_CHARS = '\p{M}\p{P}\p{S}\p{Z}\p{C}'.freeze
 
     # Inspect to wich scripts characters belongs and  infer from them the string direction. right-to-left scripts are those in {Configuration#rtl_scripts}
     #
@@ -19,18 +19,28 @@ module StringDirection
       end
     end
 
+    protected
+
+    def rtl_regex
+      /[#{join_rtl_for_regex}]/
+    end
+
+    def ltr_regex
+      /[^#{join_rtl_for_regex}#{IGNORED_CHARS}]/
+    end
+
     private
 
     def rtl_characters?(string)
-      string.match(/[#{join_rtl_for_regex}]/)
+      string.match(rtl_regex)
     end
 
     def ltr_characters?(string)
-      string.gsub(CHAR_IGNORE_REGEX, '').match(/[^#{join_rtl_for_regex}]/)
+      string.match(ltr_regex)
     end
 
     def join_rtl_for_regex
-      rtl_scripts.map { |script| '\p{' + script + '}' }.join
+      rtl_scripts.map { |script| "\\p{#{script}}" }.join
     end
 
     def rtl_scripts
