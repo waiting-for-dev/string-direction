@@ -19,17 +19,15 @@ module StringDirection
       end
     end
 
-    protected
+    private
 
     def rtl_regex
-      /[#{join_rtl_for_regex}]/
+      @rtl_regex ||= /[#{rtl_script_character_classes}]/
     end
 
     def ltr_regex
-      /[^#{join_rtl_for_regex}#{IGNORED_CHARS}]/
+      @ltr_regex ||= /[^#{rtl_script_character_classes}#{IGNORED_CHARS}]/
     end
-
-    private
 
     def rtl_characters?(string)
       string.match(rtl_regex)
@@ -39,8 +37,8 @@ module StringDirection
       string.match(ltr_regex)
     end
 
-    def join_rtl_for_regex
-      rtl_scripts.map { |script| "\\p{#{script}}" }.join
+    def rtl_script_character_classes
+      @rtl_script_character_classes ||= rtl_scripts.map { |script| "\\p{#{script}}" }.join
     end
 
     def rtl_scripts
