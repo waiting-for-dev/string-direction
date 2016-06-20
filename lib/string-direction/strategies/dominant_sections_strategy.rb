@@ -11,31 +11,40 @@ module StringDirection
     # @return [String, nil]
     def run(string)
       @s = string.to_s
-      counts = Hash.new(0)
-      each_section do |type, length|
-        counts[type] += length
-      end
-      return nil if counts[ltr] == counts[rtl]
-      counts.max_by { |_k, v| v }.first
-    end
 
-    # yields once for each ltr / rtl "section" in the string, with the type
-    # being ltr or rtl and length being the length of the section
-    def each_section
-      # find the start of the first section - the first ltr / rtl character
-      starts = { ltr => next_ltr_character(0), rtl => next_rtl_character(0) }
-      type, start = starts.reject { |_k, v| v.nil? }.min_by { |_k, v| v }
-      # neither rtl / ltr were found
-      return if start.nil?
-      loop do
-        # if the current section is ltr then it finishes at the next rtl character
-        finish = type == ltr ? next_rtl_character(start) : next_ltr_character(start)
-        break if finish.nil?
-        yield type, finish - start
-        type = type == ltr ? rtl : ltr
-        start = finish
+      first_rtl = next_rtl_character(0)
+      first_ltr = next_ltr_character(0)
+      return nil if first_rtl.nil? && first_ltr.nil?
+      return rtl if first_ltr.nil?
+      return ltr if first_rtl.nil?
+
+      if first_ltr < first_rtl
+        current = ltr
+        ltr_characters = first_rtl - first_ltr
+        rtl_characters = 0
+        i = first_rtl
+      else
+        current = rtl
+        ltr_characters = 0
+        rtl_characters = first_ltr - first_rtl
+        i = first_ltr
       end
-      yield type, @s.length - start
+
+      while i < @s.length
+        previous = i
+        if current == rtl
+          i = next_ltr_character(previous) || @s.length
+          rtl_characters += i - previous
+          current = ltr
+        else
+          i = next_rtl_character(previous) || @s.length
+          ltr_characters += i - previous
+          current = rtl
+        end
+      end
+      return ltr if ltr_characters > rtl_characters
+      return rtl if rtl_characters > ltr_characters
+      nil
     end
 
     private
