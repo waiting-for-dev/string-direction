@@ -9,12 +9,20 @@ module StringDirection
     # @return [String, nil]
     def run(string)
       string = string.to_s
-      ltr_characters = string.scan(ltr_regex).size
-      rtl_characters = string.scan(rtl_regex).size
-      diff = ltr_characters - rtl_characters
+      ltr_count = chars_count(string, ltr_regex)
+      rtl_count = chars_count(string, rtl_regex)
+      diff = ltr_count - rtl_count
       return ltr if diff > 0
       return rtl if diff < 0
       nil
+    end
+
+    private
+
+    def chars_count(string, regex)
+      count = 0
+      string.scan(regex) { count += 1 }
+      count
     end
   end
 end
