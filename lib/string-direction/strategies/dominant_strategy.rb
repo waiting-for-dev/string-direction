@@ -1,6 +1,6 @@
 module StringDirection
   # Strategy to decide direction between ltr or rtl in function of which is the main type
-  class DominantSectionsStrategy < CharactersStrategy
+  class DominantStrategy < CharactersStrategy
     # Get the number of ltr and rtl characters in the supplied string and infer
     # direction from the most common type. For this strategy the direction can
     # be ltr or rtl, but never bidi. In case of draw it returns nil.

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe StringDirection::DominantSectionsStrategy do
+describe StringDirection::DominantStrategy do
   describe '#run' do
     let(:english) { 'English' }
     let(:arabic) { 'العربية' }

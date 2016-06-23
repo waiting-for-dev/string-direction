@@ -4,7 +4,7 @@ require 'string-direction/detector'
 require 'string-direction/strategy'
 require 'string-direction/strategies/marks_strategy'
 require 'string-direction/strategies/characters_strategy'
-require 'string-direction/strategies/dominant_sections_strategy'
+require 'string-direction/strategies/dominant_strategy'
 require 'string-direction/string_methods'
 
 # Constants & configuration common in the whole library
