@@ -39,7 +39,7 @@ detector = StringDirection::Detector.new(:foo, :bar)
 
 In the above example, classes `StringDirection::FooStrategy` and `StringDirection::BarStrategy` have to be in the load path.
 
-Two strategies are natively integrated: `marks` and `characters`. They are used, in that order, as default strategies if no arguments are given to the detector.
+Three strategies are natively integrated: `marks`, `characters` & `dominant`. `marks` && `characters` are used as default strategies if no arguments are given to the detector.
 
 ### marks
 
@@ -101,6 +101,21 @@ This can be useful, mainly, for scripts that have both left-to-right and right-t
 Keep in mind than only [scripts recognized by Ruby regular expressions](http://www.ruby-doc.org/core-1.9.3/Regexp.html#label-Character+Properties) are allowed.
 
 `characters` strategy can not only analyze a string but everything responding to `to_s`.
+
+### dominant
+
+With `dominant` strategy, a string can be left-to-right or right-to-left, but never bidi. It returns one or the other in function of which one has more characters.
+
+```ruby
+detector = StringDirection::Detector.new(:dominant)
+
+detector.direction('e العربية') #=> 'rtl'
+detector.direction('english ة') #=> 'ltr'
+```
+
+As with `characters` strategy, you can change which scripts are considered right-to-left.
+
+`dominant` strategy can not only analyze a string but everything responding to `to_s`.
 
 ### Custom Strategies
 
