@@ -18,7 +18,7 @@ detector.rtl?('العربية') #=> true
 detector.bidi?('english') #=> false
 ```
 
-But, if you preffer, you can monkey patch `String`:
+But, if you prefer, you can monkey patch `String`:
 
 ```ruby
 String.send(:include, StringDirection::StringMethods)
