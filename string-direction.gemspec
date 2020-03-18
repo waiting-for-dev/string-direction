@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n")
 
   s.add_development_dependency 'bundler', '~> 1.10'
-  s.add_development_dependency 'rake', '~> 10.4'
+  s.add_development_dependency 'rake', '~> 12.3', '>= 12.3.3'
   s.add_development_dependency 'rspec', '~> 3.3'
   s.add_development_dependency 'pry', '~> 0.10'
   s.add_development_dependency 'pry-byebug', '~> 3.2'
