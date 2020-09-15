@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module StringDirection
   # {StringDirection} configuration
   class Configuration
@@ -18,9 +20,9 @@ module StringDirection
 
     # Initialize defaults
     def initialize
-      self.rtl_scripts = %w(Arabic Hebrew Nko Kharoshthi Phoenician Syriac Thaana Tifinagh)
-      self.default_strategies = [:marks, :characters]
-      self.string_methods_strategies = [:marks, :characters]
+      self.rtl_scripts = %w[Arabic Hebrew Nko Kharoshthi Phoenician Syriac Thaana Tifinagh]
+      self.default_strategies = %i[marks characters]
+      self.string_methods_strategies = %i[marks characters]
     end
   end
 end
