@@ -14,3 +14,15 @@ AllCops:
 
 Lint/ConstantDefinitionInBlock:
   Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - 'lib/string-direction.rb'
+    - 'spec/string-direction_spec.rb'
+
+Metrics/BlockLength:
+  ExcludedMethods:
+    - configure
+    - describe
+    - context
+    - shared_examples
