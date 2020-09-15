@@ -3,6 +3,7 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'string-direction/version'
+require 'rake/file_list'
 
 Gem::Specification.new do |s|
   s.name = 'string-direction'
@@ -13,7 +14,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/waiting-for-dev/string-direction/'
   s.authors = ['Marc Busqué']
   s.email = 'marc@lamarciana.com'
-  s.files = `git ls-files`.split("\n")
+  s.files = Rake::FileList['COPYING.txt', 'lib/**/*', 'README.md'].exclude(*File.read('.gitignore').split)
 
   s.add_development_dependency 'bundler', '~> 2.1'
   s.add_development_dependency 'pry', '~> 0.13'
