@@ -14,9 +14,9 @@ Gem::Specification.new do |s|
   s.email = 'marc@lamarciana.com'
   s.files = `git ls-files`.split("\n")
 
-  s.add_development_dependency 'bundler', '~> 1.10'
-  s.add_development_dependency 'rake', '~> 12.3', '>= 12.3.3'
-  s.add_development_dependency 'rspec', '~> 3.3'
-  s.add_development_dependency 'pry', '~> 0.10'
-  s.add_development_dependency 'pry-byebug', '~> 3.2'
+  s.add_development_dependency 'bundler', '~> 2.1'
+  s.add_development_dependency 'rake', '~> 13.0'
+  s.add_development_dependency 'rspec', '~> 3.9'
+  s.add_development_dependency 'pry', '~> 0.13'
+  s.add_development_dependency 'pry-byebug', '~> 3.9'
 end
