@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module StringDirection
   # Strategy to detect direction from the scripts to which string characters belong
   class CharactersStrategy < Strategy
     # Ignored characters: unicode marks, punctuations, symbols, separator and other general categories
-    IGNORED_CHARS = '\p{M}\p{P}\p{S}\p{Z}\p{C}'.freeze
+    IGNORED_CHARS = '\p{M}\p{P}\p{S}\p{Z}\p{C}'
 
     # Inspect to wich scripts characters belongs and  infer from them the string direction. right-to-left scripts are those in {Configuration#rtl_scripts}
     #

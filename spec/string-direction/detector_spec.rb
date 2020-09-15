@@ -1,33 +1,35 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe StringDirection::Detector do
   module StringDirection
     class LtrStrategy < Strategy
-      def run(string)
+      def run(_string)
         ltr
       end
     end
 
     class RtlStrategy < Strategy
-      def run(string)
+      def run(_string)
         rtl
       end
     end
 
     class BidiStrategy < Strategy
-      def run(string)
+      def run(_string)
         bidi
       end
     end
 
     class NilStrategy < Strategy
-      def run(string)
+      def run(_string)
         nil
       end
     end
 
     class CamelizeCamelizeStrategy < Strategy
-      def run(string)
+      def run(_string)
         nil
       end
     end

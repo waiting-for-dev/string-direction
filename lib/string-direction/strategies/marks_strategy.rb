@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module StringDirection
   # Strategy to detect direction looking for the presence of unicode marks
   class MarksStrategy < Strategy
     # left-to-right unicode mark
-    LTR_MARK = "\u200e".freeze
+    LTR_MARK = "\u200e"
 
     # right-to-right unicode mark
-    RTL_MARK = "\u200f".freeze
+    RTL_MARK = "\u200f"
 
     # Look for the presence of unicode marks in given string and infers from them its direction
     #

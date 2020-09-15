@@ -1,5 +1,6 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'string-direction/version'
 
@@ -15,8 +16,10 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n")
 
   s.add_development_dependency 'bundler', '~> 2.1'
-  s.add_development_dependency 'rake', '~> 13.0'
-  s.add_development_dependency 'rspec', '~> 3.9'
   s.add_development_dependency 'pry', '~> 0.13'
   s.add_development_dependency 'pry-byebug', '~> 3.9'
+  s.add_development_dependency 'rake', '~> 13.0'
+  s.add_development_dependency 'rspec', '~> 3.9'
+  s.add_development_dependency 'rubocop', '~> 0.90'
+  s.add_development_dependency 'rubocop-packaging', '~> 0.4'
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe StringDirection::DominantStrategy do
@@ -10,7 +12,7 @@ describe StringDirection::DominantStrategy do
     context 'when both left-to-right and right-to-left characters are present in equal numbers' do
       let(:string) { arabic + english }
 
-      it "returns nil" do
+      it 'returns nil' do
         expect(subject).to eq nil
       end
     end

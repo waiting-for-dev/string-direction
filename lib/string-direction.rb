@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'string-direction/version'
 require 'string-direction/configuration'
 require 'string-direction/detector'
@@ -10,13 +12,13 @@ require 'string-direction/string_methods'
 # Constants & configuration common in the whole library
 module StringDirection
   # left-to-right identifier
-  LTR  = 'ltr'.freeze
+  LTR  = 'ltr'
 
   # right-to-left identifier
-  RTL  = 'rtl'.freeze
+  RTL  = 'rtl'
 
   # bidi identifier
-  BIDI = 'bidi'.freeze
+  BIDI = 'bidi'
 
   class << self
     # {Configuration} object

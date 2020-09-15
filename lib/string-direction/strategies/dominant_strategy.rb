@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module StringDirection
   # Strategy to decide direction between ltr or rtl in function of which is the main type
   class DominantStrategy < CharactersStrategy
@@ -14,6 +16,7 @@ module StringDirection
       diff = ltr_count - rtl_count
       return ltr if diff > 0
       return rtl if diff < 0
+
       nil
     end
 
