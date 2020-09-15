@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe StringDirection::StringMethods do
-  subject { 'abc' }
+  subject { 'abc'.dup }
 
   context 'in any case' do
     before :each do
-      String.send(:include, StringDirection::StringMethods)
+      String.include StringDirection::StringMethods
     end
 
     describe '#direction' do
@@ -36,7 +38,7 @@ describe StringDirection::StringMethods do
   context 'when StringDirection.configuration.string_methods_strategies is changed' do
     before :each do
       class StringDirection::AlwaysRtlStrategy < StringDirection::Strategy
-        def run(string)
+        def run(_string)
           rtl
         end
       end
@@ -45,11 +47,11 @@ describe StringDirection::StringMethods do
         config.string_methods_strategies = [:always_rtl]
       end
 
-      String.send(:include, StringDirection::StringMethods)
+      String.include StringDirection::StringMethods
     end
 
     it 'uses that configured strategies' do
-      expect('abc'.direction).to eq('rtl')
+      expect('abc'.dup.direction).to eq('rtl')
     end
 
     after :each do
