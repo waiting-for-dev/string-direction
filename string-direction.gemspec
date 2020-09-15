@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.authors = ['Marc Busqué']
   s.email = 'marc@lamarciana.com'
   s.files = Rake::FileList['COPYING.txt', 'lib/**/*', 'README.md'].exclude(*File.read('.gitignore').split)
+  s.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
 
   s.add_development_dependency 'bundler', '~> 2.1'
   s.add_development_dependency 'pry', '~> 0.13'
