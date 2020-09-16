@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module StringDirection
-  # Methods intended to be monkey patched to String through `String.include(StringDirection::StringMethods)`. This will allow stuff like `'English'.direction #=> 'ltr'`. All methods are delegated to {Detector} with `self` as string argument.
+  # Methods intended to be monkey patched to String through `String.include(StringDirection::StringMethods)`.
+  # This will allow stuff like `'English'.direction #=> 'ltr'`. All methods are delegated to {Detector} with
+  # `self` as string argument.
   module StringMethods
     # @see Detector#direction
     # @return [String]

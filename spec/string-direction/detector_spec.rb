@@ -36,7 +36,8 @@ describe StringDirection::Detector do
   end
 
   context '#initialize(*strategies)' do
-    it 'initializes the strategies inflected from the arguments and adds them, in the same order, as strategies instance var array' do
+    it 'initializes the strategies inflected from the arguments and adds them, in the same order, as' \
+       'strategies instance var array' do
       detector = described_class.new(:ltr, :nil)
 
       expect(detector.strategies.first).to be_an_instance_of(StringDirection::LtrStrategy)

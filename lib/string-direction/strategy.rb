@@ -3,7 +3,9 @@
 module StringDirection
   # @abstract Subclass and override {#run} to implement
   class Strategy
-    # Each strategy must implement this method, accepting an string as its argument. It must return {StringDirection::LTR}, {StringDirection::RTL}, {StringDirection::BIDI} depending on direction detected, or nil on detection failure
+    # Each strategy must implement this method, accepting an string as its argument. It must return
+    # {StringDirection::LTR}, {StringDirection::RTL}, {StringDirection::BIDI} depending on direction
+    # detected, or nil on detection failure.
     # @abstract
     # @raise [NotImplementedError]
     def run(_string)
