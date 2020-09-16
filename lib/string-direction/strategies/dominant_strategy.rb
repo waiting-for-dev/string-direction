@@ -14,8 +14,8 @@ module StringDirection
       ltr_count = chars_count(string, ltr_regex)
       rtl_count = chars_count(string, rtl_regex)
       diff = ltr_count - rtl_count
-      return ltr if diff > 0
-      return rtl if diff < 0
+      return ltr if diff.positive?
+      return rtl if diff.negative?
 
       nil
     end
