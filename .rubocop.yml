@@ -1,5 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
 require:
   - rubocop-packaging
 
@@ -14,6 +12,10 @@ AllCops:
 
 Lint/ConstantDefinitionInBlock:
   Enabled: false
+
+Lint/DuplicateMethods:
+  Exclude:
+    - 'lib/string-direction.rb'
 
 Metrics/BlockLength:
   ExcludedMethods:
