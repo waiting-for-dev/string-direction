@@ -6,7 +6,8 @@ module StringDirection
     # Ignored characters: unicode marks, punctuations, symbols, separator and other general categories
     IGNORED_CHARS = '\p{M}\p{P}\p{S}\p{Z}\p{C}'
 
-    # Inspect to wich scripts characters belongs and  infer from them the string direction. right-to-left scripts are those in {Configuration#rtl_scripts}
+    # Inspect to wich scripts characters belongs and  infer from them the string direction.
+    # right-to-left scripts are those in {Configuration#rtl_scripts}.
     #
     # params [String] The string to inspect
     # @return [String, nil]
